@@ -401,6 +401,19 @@ public class SolidSphereFollower : NetworkBehaviour
     void AdvancePhase() {
         if (!IsServer) return;
 
+        // NEW: Force copy current tracing paths into historical caches prior to changing running numbers
+        if (voxelGridManager != null)
+        {
+            if (_currentPhaseNet.Value == 1 || _currentPhaseNet.Value == 2)
+            {
+                voxelGridManager.SavePhaseData(_currentPhaseNet.Value);
+            }
+            else if (_currentPhaseNet.Value == 3)
+            {
+                voxelGridManager.SavePhase3Data(_isPhase3RearPartNet.Value);
+            }
+        }
+
         if (_currentPhaseNet.Value == 3 && !_isPhase3RearPartNet.Value) {
             _isPhase3RearPartNet.Value = true;
             StartPhase(3);
@@ -427,6 +440,12 @@ public class SolidSphereFollower : NetworkBehaviour
         {
             movinAvatar.SetActive(_currentPhaseNet.Value == 3 && _isPhase3RearPartNet.Value);
         }
+        
+        if (avatarMirror != null)
+        {
+            avatarMirror.gameObject.SetActive(_currentPhaseNet.Value == 3 && _isPhase3RearPartNet.Value);
+        }
+        
         if (voxelGridManager != null) 
         {
             voxelGridManager.ResetAllVoxelData();
@@ -440,6 +459,27 @@ public class SolidSphereFollower : NetworkBehaviour
     { 
         if (!IsServer) return;
         _isTestRunningNet.Value = false;
+        
+        // Save final phase data
+        if (voxelGridManager != null && _currentPhaseNet.Value == 4)
+        {
+            voxelGridManager.SavePhaseData(4);
+            voxelGridManager.ClearGridDisplay();
+        }
+
+        // NEW CLEANUP ROUTINE: Clear all remaining bubble objects & background wedges left in the scene
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            GameObject child = transform.GetChild(i).gameObject;
+            if (Application.isEditor && !Application.isPlaying) 
+                DestroyImmediate(child);
+            else 
+                Destroy(child); // Destroys the NetworkObject across all connected clients automatically
+        }
+
+        if (movinAvatar != null) movinAvatar.SetActive(false);
+        if (avatarMirror != null) avatarMirror.gameObject.SetActive(false);
+        
         if (uiPanelController != null)
         {
             ActivateAndBringBackUI();

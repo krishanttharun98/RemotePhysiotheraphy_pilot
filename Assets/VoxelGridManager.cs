@@ -28,8 +28,11 @@ public class VoxelGridManager : MonoBehaviour
     public float phase4YOffset = -0.50f;
     
     private bool isPlacingGrid = true;
+    private bool isLiveTracking = true; // Flag to pause hardware tracking updates during replay mode
     private Vector2[][] taskInteractionData = new Vector2[4][];
+    private Vector2[][] historicalPhaseData = new Vector2[6][]; // Expanded to size 6 to safely support index 5
     private int currentActiveTask = 0;
+    private int displayingHistoricalPhase = -1; // -1 = no historical phase displayed
 
     private Vector3[] voxelPositions;
 
@@ -63,6 +66,12 @@ public class VoxelGridManager : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             taskInteractionData[i] = new Vector2[totalVoxels];
+        }
+
+        // Initialize historical phase data array with 6 allocations to avoid array boundaries exception
+        for (int i = 0; i < 6; i++)
+        {
+            historicalPhaseData[i] = new Vector2[totalVoxels];
         }
 
         voxelPositions = new Vector3[totalVoxels];
@@ -137,14 +146,21 @@ public class VoxelGridManager : MonoBehaviour
             trackingGridWorldRot = mainCamera.rotation;
         }
 
-        TrackControllerInWorkspace(leftController, isRightHand: false);
-        TrackControllerInWorkspace(rightController, isRightHand: true);
-
-        interactionBuffer.SetData(taskInteractionData[currentActiveTask]);
+        // Only poll and save hardware interaction data if live session monitoring is active
+        if (isLiveTracking)
+        {
+            TrackControllerInWorkspace(leftController, isRightHand: false);
+            TrackControllerInWorkspace(rightController, isRightHand: true);
+            interactionBuffer.SetData(taskInteractionData[currentActiveTask]);
+        }
 
         Matrix4x4 displayMatrix = Matrix4x4.TRS(displayGridWorldPos, displayGridWorldRot, Vector3.one);
         heatmapMaterial.SetMatrix("_LocalToWorldMatrix", displayMatrix);
         
+        // Set shader mode to show only tracking voxels (no cube mesh)
+        heatmapMaterial.SetInt("_IsVisualizationActive", 3);
+        
+        // Render only the voxel tracking visualization (shader handles not rendering the mesh)
         Graphics.DrawMeshInstancedProcedural(baseCubeMesh, 0, heatmapMaterial, renderBounds, voxelPositions.Length);
     }
 
@@ -168,6 +184,7 @@ public class VoxelGridManager : MonoBehaviour
         Matrix4x4 previewMatrix = Matrix4x4.TRS(displayGridWorldPos, displayGridWorldRot, Vector3.one);
         heatmapMaterial.SetMatrix("_LocalToWorldMatrix", previewMatrix);
         
+        // Show base cube mesh during placement for alignment reference
         Graphics.DrawMeshInstancedProcedural(baseCubeMesh, 0, heatmapMaterial, renderBounds, voxelPositions.Length);
 
         if (OVRInput.GetDown(OVRInput.RawButton.B))
@@ -188,6 +205,9 @@ public class VoxelGridManager : MonoBehaviour
     /// </summary>
     public void ResetAllVoxelData()
     {
+        isLiveTracking = true; // Automatically resume live calculations when starting a new runtime phase
+        displayingHistoricalPhase = -1;
+
         if (taskInteractionData == null) return;
         
         for (int i = 0; i < 4; i++)
@@ -240,7 +260,90 @@ public class VoxelGridManager : MonoBehaviour
     {
         if (taskIndex < 0 || taskIndex >= 4) return;
         currentActiveTask = taskIndex;
-        if (interactionBuffer != null) interactionBuffer.SetData(taskInteractionData[currentActiveTask]);
+        if (interactionBuffer != null && isLiveTracking) 
+        {
+            interactionBuffer.SetData(taskInteractionData[currentActiveTask]);
+        }
+    }
+
+    /// <summary>
+    /// Save the current phase's tracking data to historical storage
+    /// For Phase 3, it automatically detects front/rear part and saves separately
+    /// phaseNumber: 1-4 (regular phases), with phase 3 handling front/rear internally
+    /// </summary>
+    public void SavePhaseData(int phase)
+    {
+        if (phase < 1 || phase > 4) return;
+        if (taskInteractionData[phase - 1] == null) return;
+        
+        // For phase 3, save to both front (phase 3) and rear (phase 4) in history
+        if (phase == 3)
+        {
+            System.Array.Copy(taskInteractionData[phase - 1], historicalPhaseData[phase], taskInteractionData[phase - 1].Length);
+            Debug.Log($"Phase 3 data saved to history");
+        }
+        else
+        {
+            // Normal phase mapping: phase 1->1, 2->2, 4->5
+            int historyIndex = (phase == 4) ? 5 : phase;
+            System.Array.Copy(taskInteractionData[phase - 1], historicalPhaseData[historyIndex], taskInteractionData[phase - 1].Length);
+            Debug.Log($"Phase {phase} data saved to history");
+        }
+    }
+
+    /// <summary>
+    /// Save phase 3 data with explicit front/rear designation
+    /// isRear: true for Phase 3 Rear, false for Phase 3 Front
+    /// </summary>
+    public void SavePhase3Data(bool isRear)
+    {
+        if (taskInteractionData[2] == null) return; // Phase 3 is index 2
+        
+        // Phase 3 Front -> history index 3, Phase 3 Rear -> history index 4
+        int historyIndex = isRear ? 4 : 3;
+        System.Array.Copy(taskInteractionData[2], historicalPhaseData[historyIndex], taskInteractionData[2].Length);
+        Debug.Log($"Phase 3 {(isRear ? "Rear" : "Front")} data saved to history");
+    }
+
+    /// <summary>
+    /// Display historical data for a specific phase (1-5)
+    /// 1 = Phase 1, 2 = Phase 2, 3 = Phase 3 Front, 4 = Phase 3 Rear, 5 = Phase 4
+    /// Automatically clears previous display when switching phases
+    /// </summary>
+    public void DisplayPhaseHistory(int phase)
+    {
+        if (phase < 1 || phase > 5) return;
+        if (historicalPhaseData[phase] == null) return;
+        
+        isLiveTracking = false; // Disconnect update loops from re-writing over custom chosen history view
+        displayingHistoricalPhase = phase;
+
+        // Update the interaction buffer with historical data
+        if (interactionBuffer != null)
+        {
+            interactionBuffer.SetData(historicalPhaseData[phase]);
+        }
+        Debug.Log($"Displaying Phase {phase} historical data");
+    }
+
+    /// <summary>
+    /// Clear all display (no tracing visible)
+    /// Call this when you want to hide all tracking visualization
+    /// </summary>
+    public void ClearGridDisplay()
+    {
+        isLiveTracking = false; // Turn off live loops to prevent automatic refresh overrides
+        displayingHistoricalPhase = -1;
+        
+        // Create empty data array
+        int totalVoxels = gridDimensions.x * gridDimensions.y * gridDimensions.z;
+        Vector2[] emptyData = new Vector2[totalVoxels];
+        
+        if (interactionBuffer != null)
+        {
+            interactionBuffer.SetData(emptyData);
+        }
+        Debug.Log("Grid display cleared");
     }
 
     private void OnDestroy()
