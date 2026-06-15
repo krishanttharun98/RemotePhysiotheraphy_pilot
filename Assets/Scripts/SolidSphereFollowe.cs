@@ -450,7 +450,12 @@ public class SolidSphereFollower : NetworkBehaviour
         {
             voxelGridManager.ResetAllVoxelData();
             voxelGridManager.SynchronizeTrackingState(phase, _localNosePos);
-            voxelGridManager.SwitchActiveTask(Mathf.Clamp(phase - 1, 0, 3));
+
+            int taskIndex = phase - 1; // Default mapping: P1->0, P2->1, P3Front->2
+            if (phase == 3 && _isPhase3RearPartNet.Value) taskIndex = 3; // P3 Rear -> slot 3
+            else if (phase == 4) taskIndex = 4; // P4 -> slot 4
+            
+            voxelGridManager.SwitchActiveTask(taskIndex);
         }
         if (_currentPhaseNet.Value > 0) BuildSetup();
     }

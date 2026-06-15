@@ -24,17 +24,25 @@ public class VoxelGridManager : MonoBehaviour
     public Transform placementPointer; 
     public float placementDistance = 1.2f;
 
+    [Header("Lightweight Performance Placement Visualizer")]
+    [Tooltip("Assign a Cylinder GameObject here to act as the voxel grid center anchor preview")]
+    public GameObject placementCylinderGizmo;
+
     [Header("SolidSphereFollower Alignment Links")]
     public float phase4YOffset = -0.50f;
     
     private bool isPlacingGrid = true;
     private bool isLiveTracking = true; // Flag to pause hardware tracking updates during replay mode
-    private Vector2[][] taskInteractionData = new Vector2[4][];
+    private Vector2[][] taskInteractionData = new Vector2[5][];
     private Vector2[][] historicalPhaseData = new Vector2[6][]; // Expanded to size 6 to safely support index 5
     private int currentActiveTask = 0;
     private int displayingHistoricalPhase = -1; // -1 = no historical phase displayed
 
     private Vector3[] voxelPositions;
+    
+    // Performance Optimization Arrays to filter out empty voxels
+    private Vector3[] activePositions;
+    private Vector2[] activeInteractions;
 
     private ComputeBuffer positionBuffer;
     private ComputeBuffer interactionBuffer;
@@ -57,13 +65,16 @@ public class VoxelGridManager : MonoBehaviour
         if (mainCamera == null) mainCamera = Camera.main?.transform;
         
         heatmapMaterial.SetInt("_IsVisualizationActive", 2); 
+
+        // Ensure the cylinder placement tracker is visible from the start
+        if (placementCylinderGizmo != null) placementCylinderGizmo.SetActive(true);
     }
 
     void InitializeGridData()
     {
         int totalVoxels = gridDimensions.x * gridDimensions.y * gridDimensions.z;
 
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 5; i++)
         {
             taskInteractionData[i] = new Vector2[totalVoxels];
         }
@@ -75,6 +86,8 @@ public class VoxelGridManager : MonoBehaviour
         }
 
         voxelPositions = new Vector3[totalVoxels];
+        activePositions = new Vector3[totalVoxels];
+        activeInteractions = new Vector2[totalVoxels];
 
         int index = 0;
         Vector3 halfSizeOffset = new Vector3(gridDimensions.x, gridDimensions.y, gridDimensions.z) * voxelSize * 0.5f;
@@ -98,11 +111,9 @@ public class VoxelGridManager : MonoBehaviour
         if (positionBuffer != null) positionBuffer.Release();
         if (interactionBuffer != null) interactionBuffer.Release();
 
+        // Buffers are initialized to total maximum capacity but populated dynamically
         positionBuffer = new ComputeBuffer(totalVoxels, sizeof(float) * 3);
-        positionBuffer.SetData(voxelPositions);
-
         interactionBuffer = new ComputeBuffer(totalVoxels, sizeof(float) * 2); 
-        interactionBuffer.SetData(taskInteractionData[currentActiveTask]);
 
         heatmapMaterial.SetBuffer("_VoxelPositions", positionBuffer);
         heatmapMaterial.SetBuffer("_VoxelInteractions", interactionBuffer);
@@ -115,53 +126,65 @@ public class VoxelGridManager : MonoBehaviour
     {
         if (mainCamera == null) return;
 
+        // Keep the center anchor cylinder perfectly updated at its world placement coordinates
+        if (placementCylinderGizmo != null)
+        {
+            placementCylinderGizmo.transform.position = displayGridWorldPos;
+            placementCylinderGizmo.transform.rotation = displayGridWorldRot;
+        }
+
         if (isPlacingGrid)
         {
             HandleManualPlacementMode();
             return; 
         }
 
-        // Align tracking coordinates with phase states
-        if (trackingCurrentPhase == 3)
-        {
-            trackingGridWorldPos = mainCamera.TransformPoint(trackingLocalNosePos);
-        }
-        else if (trackingCurrentPhase == 4)
-        {
-            trackingGridWorldPos = mainCamera.position + new Vector3(0, phase4YOffset, 0);
-        }
-        else
-        {
-            trackingGridWorldPos = mainCamera.position;
-        }
-        
-        Vector3 flatForward = mainCamera.forward;
-        flatForward.y = 0;
-        if (flatForward != Vector3.zero)
-        {
-            trackingGridWorldRot = Quaternion.LookRotation(flatForward.normalized);
-        }
-        else
-        {
-            trackingGridWorldRot = mainCamera.rotation;
-        }
-
-        // Only poll and save hardware interaction data if live session monitoring is active
         if (isLiveTracking)
         {
-            TrackControllerInWorkspace(leftController, isRightHand: false);
-            TrackControllerInWorkspace(rightController, isRightHand: true);
-            interactionBuffer.SetData(taskInteractionData[currentActiveTask]);
+            Vector3 currentTrackingOriginPos;
+            Quaternion currentTrackingOriginRot;
+
+            // Align tracking tracking origin offset dynamically based on tracking phase
+            if (trackingCurrentPhase == 3)
+            {
+                currentTrackingOriginPos = mainCamera.TransformPoint(trackingLocalNosePos);
+            }
+            else if (trackingCurrentPhase == 4)
+            {
+                currentTrackingOriginPos = mainCamera.position + new Vector3(0, phase4YOffset, 0);
+            }
+            else
+            {
+                currentTrackingOriginPos = mainCamera.position;
+            }
+
+            Vector3 flatForward = mainCamera.forward;
+            flatForward.y = 0;
+            if (flatForward != Vector3.zero)
+            {
+                currentTrackingOriginRot = Quaternion.LookRotation(flatForward.normalized);
+            }
+            else
+            {
+                currentTrackingOriginRot = mainCamera.rotation;
+            }
+
+            // Save tracking coordinate systems
+            trackingGridWorldPos = currentTrackingOriginPos;
+            trackingGridWorldRot = currentTrackingOriginRot;
+
+            // Track hardware controllers directly into the current active task layer
+            TrackControllerInWorkspace(leftController, false, taskInteractionData[currentActiveTask]);
+            TrackControllerInWorkspace(rightController, true, taskInteractionData[currentActiveTask]);
         }
 
-        Matrix4x4 displayMatrix = Matrix4x4.TRS(displayGridWorldPos, displayGridWorldRot, Vector3.one);
-        heatmapMaterial.SetMatrix("_LocalToWorldMatrix", displayMatrix);
-        
-        // Set shader mode to show only tracking voxels (no cube mesh)
-        heatmapMaterial.SetInt("_IsVisualizationActive", 3);
-        
-        // Render only the voxel tracking visualization (shader handles not rendering the mesh)
-        Graphics.DrawMeshInstancedProcedural(baseCubeMesh, 0, heatmapMaterial, renderBounds, voxelPositions.Length);
+        // Determine whether to evaluate live active task layers or historical trace layers
+        Vector2[] currentDataSource = (displayingHistoricalPhase != -1) 
+            ? historicalPhaseData[displayingHistoricalPhase] 
+            : taskInteractionData[currentActiveTask];
+
+        // Always render the voxels centered cleanly around the display grid position (the Cylinder center)
+        RenderActiveVoxelsOnly(currentDataSource, displayGridWorldPos);
     }
 
     void HandleManualPlacementMode()
@@ -180,16 +203,45 @@ public class VoxelGridManager : MonoBehaviour
             }
         }
 
-        heatmapMaterial.SetInt("_IsVisualizationActive", 2); 
-        Matrix4x4 previewMatrix = Matrix4x4.TRS(displayGridWorldPos, displayGridWorldRot, Vector3.one);
-        heatmapMaterial.SetMatrix("_LocalToWorldMatrix", previewMatrix);
-        
-        // Show base cube mesh during placement for alignment reference
-        Graphics.DrawMeshInstancedProcedural(baseCubeMesh, 0, heatmapMaterial, renderBounds, voxelPositions.Length);
-
-        if (OVRInput.GetDown(OVRInput.RawButton.B))
+        // Detect Button B (Right) or Button X (Left) to lock spatial position
+        if (OVRInput.GetDown(OVRInput.RawButton.B) || OVRInput.GetDown(OVRInput.RawButton.X))
         {
             TriggerLockSpatialAnchor();
+        }
+    }
+
+    void RenderActiveVoxelsOnly(Vector2[] sourceData, Vector3 renderPosition)
+    {
+        if (sourceData == null || positionBuffer == null || interactionBuffer == null) return;
+
+        int activeCount = 0;
+        int totalCount = sourceData.Length;
+
+        // Extract and pack only the points that are actively being drawn/interacted with
+        for (int i = 0; i < totalCount; i++)
+        {
+            if (sourceData[i].x > 0f || sourceData[i].y > 0f)
+            {
+                activePositions[activeCount] = voxelPositions[i];
+                activeInteractions[activeCount] = sourceData[i];
+                activeCount++;
+            }
+        }
+
+        // Only make the draw call if there are active painted voxels present in the workspace
+        if (activeCount > 0)
+        {
+            positionBuffer.SetData(activePositions, 0, 0, activeCount);
+            interactionBuffer.SetData(activeInteractions, 0, 0, activeCount);
+
+            Matrix4x4 displayMatrix = Matrix4x4.TRS(renderPosition, displayGridWorldRot, Vector3.one);
+            heatmapMaterial.SetMatrix("_LocalToWorldMatrix", displayMatrix);
+            
+            // Set shader mode to trace mode (making un-interacted cells completely transparent)
+            heatmapMaterial.SetInt("_IsVisualizationActive", 3);
+            
+            // Render optimized procedural instances cleanly without duplication overhead
+            Graphics.DrawMeshInstancedProcedural(baseCubeMesh, 0, heatmapMaterial, renderBounds, activeCount, null, UnityEngine.Rendering.ShadowCastingMode.Off, false);
         }
     }
 
@@ -197,29 +249,27 @@ public class VoxelGridManager : MonoBehaviour
     {
         if (!isPlacingGrid) return;
         isPlacingGrid = false;
-        heatmapMaterial.SetInt("_IsVisualizationActive", 3); 
+        heatmapMaterial.SetInt("_IsVisualizationActive", 3);
+
+        // Keep the cylinder visualizer completely active as your permanent structural anchor
+        if (placementCylinderGizmo != null) placementCylinderGizmo.SetActive(true);
+
+        Debug.Log("Spatial anchor position locked. Cylinder retained as permanent visualization center.");
     }
 
-    /// <summary>
-    /// Force clears all recorded paint points on the active data arrays
-    /// </summary>
     public void ResetAllVoxelData()
     {
-        isLiveTracking = true; // Automatically resume live calculations when starting a new runtime phase
+        isLiveTracking = true; 
         displayingHistoricalPhase = -1;
 
         if (taskInteractionData == null) return;
         
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 5; i++)
         {
             if (taskInteractionData[i] != null)
             {
                 System.Array.Clear(taskInteractionData[i], 0, taskInteractionData[i].Length);
             }
-        }
-        if (interactionBuffer != null)
-        {
-            interactionBuffer.SetData(taskInteractionData[currentActiveTask]);
         }
     }
 
@@ -229,9 +279,9 @@ public class VoxelGridManager : MonoBehaviour
         trackingLocalNosePos = localNosePos;
     }
 
-    void TrackControllerInWorkspace(Transform controller, bool isRightHand)
+    void TrackControllerInWorkspace(Transform controller, bool isRightHand, Vector2[] targetData)
     {
-        if (controller == null) return;
+        if (controller == null || targetData == null) return;
 
         Vector3 localPos = controller.position - trackingGridWorldPos;
         localPos = Quaternion.Inverse(trackingGridWorldRot) * localPos;
@@ -251,104 +301,77 @@ public class VoxelGridManager : MonoBehaviour
 
             int flatIndex = x * (gridDimensions.y * gridDimensions.z) + y * gridDimensions.z + z;
 
-            if (isRightHand) taskInteractionData[currentActiveTask][flatIndex].y = 1f; 
-            else taskInteractionData[currentActiveTask][flatIndex].x = 1f; 
+            if (flatIndex >= 0 && flatIndex < targetData.Length)
+            {
+                if (isRightHand) targetData[flatIndex].y = 1f; 
+                else targetData[flatIndex].x = 1f;
+            }
         }
     }
 
     public void SwitchActiveTask(int taskIndex)
     {
-        if (taskIndex < 0 || taskIndex >= 4) return;
+        if (taskIndex < 0 || taskIndex >= 5) return;
         currentActiveTask = taskIndex;
-        if (interactionBuffer != null && isLiveTracking) 
-        {
-            interactionBuffer.SetData(taskInteractionData[currentActiveTask]);
-        }
     }
 
-    /// <summary>
-    /// Save the current phase's tracking data to historical storage
-    /// For Phase 3, it automatically detects front/rear part and saves separately
-    /// phaseNumber: 1-4 (regular phases), with phase 3 handling front/rear internally
-    /// </summary>
     public void SavePhaseData(int phase)
     {
         if (phase < 1 || phase > 4) return;
-        if (taskInteractionData[phase - 1] == null) return;
+
+        int taskIndex = phase - 1;
+        if (phase == 4) taskIndex = 4; 
         
-        // For phase 3, save to both front (phase 3) and rear (phase 4) in history
+        if (taskInteractionData[taskIndex] == null) return;
+        
         if (phase == 3)
         {
-            System.Array.Copy(taskInteractionData[phase - 1], historicalPhaseData[phase], taskInteractionData[phase - 1].Length);
-            Debug.Log($"Phase 3 data saved to history");
+            System.Array.Copy(taskInteractionData[2], historicalPhaseData[3], taskInteractionData[2].Length);
+            Debug.Log($"Phase 3 Front data saved to history");
         }
         else
         {
-            // Normal phase mapping: phase 1->1, 2->2, 4->5
             int historyIndex = (phase == 4) ? 5 : phase;
-            System.Array.Copy(taskInteractionData[phase - 1], historicalPhaseData[historyIndex], taskInteractionData[phase - 1].Length);
+            System.Array.Copy(taskInteractionData[taskIndex], historicalPhaseData[historyIndex], taskInteractionData[taskIndex].Length);
             Debug.Log($"Phase {phase} data saved to history");
         }
     }
 
-    /// <summary>
-    /// Save phase 3 data with explicit front/rear designation
-    /// isRear: true for Phase 3 Rear, false for Phase 3 Front
-    /// </summary>
     public void SavePhase3Data(bool isRear)
     {
-        if (taskInteractionData[2] == null) return; // Phase 3 is index 2
+        int taskIndex = isRear ? 3 : 2;
+        if (taskInteractionData[taskIndex] == null) return;
         
-        // Phase 3 Front -> history index 3, Phase 3 Rear -> history index 4
         int historyIndex = isRear ? 4 : 3;
-        System.Array.Copy(taskInteractionData[2], historicalPhaseData[historyIndex], taskInteractionData[2].Length);
+        System.Array.Copy(taskInteractionData[taskIndex], historicalPhaseData[historyIndex], taskInteractionData[taskIndex].Length);
         Debug.Log($"Phase 3 {(isRear ? "Rear" : "Front")} data saved to history");
     }
 
-    /// <summary>
-    /// Display historical data for a specific phase (1-5)
-    /// 1 = Phase 1, 2 = Phase 2, 3 = Phase 3 Front, 4 = Phase 3 Rear, 5 = Phase 4
-    /// Automatically clears previous display when switching phases
-    /// </summary>
     public void DisplayPhaseHistory(int phase)
     {
         if (phase < 1 || phase > 5) return;
         if (historicalPhaseData[phase] == null) return;
         
-        isLiveTracking = false; // Disconnect update loops from re-writing over custom chosen history view
+        isLiveTracking = false; 
         displayingHistoricalPhase = phase;
-
-        // Update the interaction buffer with historical data
-        if (interactionBuffer != null)
-        {
-            interactionBuffer.SetData(historicalPhaseData[phase]);
-        }
         Debug.Log($"Displaying Phase {phase} historical data");
     }
 
-    /// <summary>
-    /// Clear all display (no tracing visible)
-    /// Call this when you want to hide all tracking visualization
-    /// </summary>
     public void ClearGridDisplay()
     {
-        isLiveTracking = false; // Turn off live loops to prevent automatic refresh overrides
+        isLiveTracking = false; 
         displayingHistoricalPhase = -1;
-        
-        // Create empty data array
-        int totalVoxels = gridDimensions.x * gridDimensions.y * gridDimensions.z;
-        Vector2[] emptyData = new Vector2[totalVoxels];
-        
-        if (interactionBuffer != null)
-        {
-            interactionBuffer.SetData(emptyData);
-        }
         Debug.Log("Grid display cleared");
     }
 
     private void OnDestroy()
     {
         if (positionBuffer != null) positionBuffer.Release();
+        if (interactionBuffer != null) pointerBufferRelease();
+    }
+
+    private void pointerBufferRelease()
+    {
         if (interactionBuffer != null) interactionBuffer.Release();
     }
 }
