@@ -75,8 +75,15 @@ public class BubbleTrajectoryReplayManager : MonoBehaviour
         SetupReflectionAccessors();
         LinkUiButtonListeners();
 
-        // Ensure the cylinder center tracker is visible from the very start
-        if (placementCylinderGizmo != null) placementCylinderGizmo.SetActive(true);
+        if (ColocationRoleHelper.IsLocalTherapist())
+        {
+            if (placementCylinderGizmo != null) placementCylinderGizmo.SetActive(true);
+        }
+        else
+        {
+            _isPlacingHistoryGrid = false;
+            if (placementCylinderGizmo != null) placementCylinderGizmo.SetActive(false);
+        }
 
         // Establish the fixed patient tracking base right at startup
         if (solidSphereFollower != null && solidSphereFollower.headset != null)
@@ -123,7 +130,14 @@ public class BubbleTrajectoryReplayManager : MonoBehaviour
 
     void Update()
     {
-        HandleGridPlacementInput();
+        if (ColocationRoleHelper.IsLocalTherapist())
+        {
+            HandleGridPlacementInput();
+        }
+        else if (placementCylinderGizmo != null)
+        {
+            placementCylinderGizmo.SetActive(false);
+        }
 
         bool isTestRunning = _isTestRunningRef != null ? _isTestRunningRef() : false;
 
@@ -176,6 +190,8 @@ public class BubbleTrajectoryReplayManager : MonoBehaviour
 
     void HandleGridPlacementInput()
     {
+        if (!ColocationRoleHelper.IsLocalTherapist()) return;
+
         if (_isPlacingHistoryGrid)
         {
             if (placementPointer != null)
@@ -264,6 +280,8 @@ public class BubbleTrajectoryReplayManager : MonoBehaviour
 
     void ToggleTrajectoryReviewMode(int targetPhaseIndex)
     {
+        if (!ColocationRoleHelper.IsLocalTherapist()) return;
+
         if (_currentActiveReviewPhase == targetPhaseIndex)
         {
             ClearSpawnedHistoryPoints();

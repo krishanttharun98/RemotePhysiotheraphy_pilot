@@ -64,10 +64,17 @@ public class VoxelGridManager : MonoBehaviour
         if (placementPointer == null) placementPointer = rightController;
         if (mainCamera == null) mainCamera = Camera.main?.transform;
         
-        heatmapMaterial.SetInt("_IsVisualizationActive", 2); 
+        heatmapMaterial.SetInt("_IsVisualizationActive", 2);
 
-        // Ensure the cylinder placement tracker is visible from the start
-        if (placementCylinderGizmo != null) placementCylinderGizmo.SetActive(true);
+        if (!ColocationRoleHelper.IsLocalTherapist())
+        {
+            isPlacingGrid = false;
+            if (placementCylinderGizmo != null) placementCylinderGizmo.SetActive(false);
+        }
+        else if (placementCylinderGizmo != null)
+        {
+            placementCylinderGizmo.SetActive(true);
+        }
     }
 
     void InitializeGridData()
@@ -126,20 +133,27 @@ public class VoxelGridManager : MonoBehaviour
     {
         if (mainCamera == null) return;
 
-        // Keep the center anchor cylinder perfectly updated at its world placement coordinates
-        if (placementCylinderGizmo != null)
+        if (ColocationRoleHelper.IsLocalTherapist())
         {
-            placementCylinderGizmo.transform.position = displayGridWorldPos;
-            placementCylinderGizmo.transform.rotation = displayGridWorldRot;
+            if (placementCylinderGizmo != null)
+            {
+                placementCylinderGizmo.SetActive(true);
+                placementCylinderGizmo.transform.position = displayGridWorldPos;
+                placementCylinderGizmo.transform.rotation = displayGridWorldRot;
+            }
+
+            if (isPlacingGrid)
+            {
+                HandleManualPlacementMode();
+                return;
+            }
+        }
+        else if (placementCylinderGizmo != null)
+        {
+            placementCylinderGizmo.SetActive(false);
         }
 
-        if (isPlacingGrid)
-        {
-            HandleManualPlacementMode();
-            return; 
-        }
-
-        if (isLiveTracking)
+        if (isLiveTracking && ColocationRoleHelper.IsLocalPatient())
         {
             Vector3 currentTrackingOriginPos;
             Quaternion currentTrackingOriginRot;
@@ -189,6 +203,7 @@ public class VoxelGridManager : MonoBehaviour
 
     void HandleManualPlacementMode()
     {
+        if (!ColocationRoleHelper.IsLocalTherapist()) return;
         if (placementPointer == null) return;
 
         displayGridWorldPos = placementPointer.position + (placementPointer.forward * placementDistance);
@@ -247,6 +262,7 @@ public class VoxelGridManager : MonoBehaviour
 
     public void TriggerLockSpatialAnchor()
     {
+        if (!ColocationRoleHelper.IsLocalTherapist()) return;
         if (!isPlacingGrid) return;
         isPlacingGrid = false;
         heatmapMaterial.SetInt("_IsVisualizationActive", 3);

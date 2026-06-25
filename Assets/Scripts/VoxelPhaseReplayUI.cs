@@ -47,6 +47,7 @@ public class VoxelPhaseReplayUI : MonoBehaviour
 
     void DisplayPhase(int phase, string phaseName)
     {
+        if (!ColocationRoleHelper.IsLocalTherapist()) return;
         if (voxelGridManager == null) return;
 
         // If clicking the same phase, toggle clear

@@ -38,7 +38,11 @@ public class SolidSphereFollower : NetworkBehaviour
     public VRCanvasController uiPanelController;
 
     [Header("Dynamic Scaling")]
-    public float targetVisualSize = 0.045f; 
+    public float targetVisualSize = 0.045f;
+
+    [Header("Avatar Overlay")]
+    [Tooltip("Distance in front of the patient during Phase 3 rear mirror tasks.")]
+    public float avatarForwardOffsetPhase3Rear = 1.0f;
 
     // --- Core State Variables (NetworkVariables to mirror state down to Client) ---
     private NetworkVariable<int> _currentPhaseNet = new NetworkVariable<int>(0);
@@ -56,6 +60,12 @@ public class SolidSphereFollower : NetworkBehaviour
 
     public VoxelGridManager voxelGridManager;
 
+    private PatientDigitalTwinSync _digitalTwinSync;
+    private readonly NetworkVariable<Vector3> _localNosePosNet = new NetworkVariable<Vector3>(
+        Vector3.zero,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server);
+
     void Start()
     {
         // Tracking Hardware Auto-Discovery
@@ -71,6 +81,8 @@ public class SolidSphereFollower : NetworkBehaviour
         }
 
         if (movinAvatar != null) movinAvatar.SetActive(false);
+
+        ResolveAvatarReferences();
         
         if (headset != null && rightHand != null) {
             _userReach = Vector3.Distance(headset.position, rightHand.position);
@@ -80,9 +92,26 @@ public class SolidSphereFollower : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        // Network state syncing updates local rendering pipelines on all clients automatically
         _currentPhaseNet.OnValueChanged += OnPhaseOrRearChanged;
         _isPhase3RearPartNet.OnValueChanged += OnPhaseOrRearChanged;
+
+        _digitalTwinSync = GetComponent<PatientDigitalTwinSync>();
+        if (_digitalTwinSync == null)
+        {
+            _digitalTwinSync = gameObject.AddComponent<PatientDigitalTwinSync>();
+        }
+
+        ResolveAvatarReferences();
+        _digitalTwinSync.BindAvatar(movinAvatar, avatarHead, avatarLeftHand, avatarRightHand);
+
+        if (movinAvatar != null)
+        {
+            NetworkObject avatarNetworkObject = movinAvatar.GetComponent<NetworkObject>();
+            if (avatarNetworkObject != null)
+            {
+                avatarNetworkObject.SynchronizeTransform = false;
+            }
+        }
 
         if (IsServer)
         {
@@ -90,7 +119,7 @@ public class SolidSphereFollower : NetworkBehaviour
             _isPhase3RearPartNet.Value = false;
             _timerNet.Value = 10f; 
             _isTestRunningNet.Value = true;
-            if (movinAvatar != null) movinAvatar.SetActive(false);
+            SetAvatarPresentationActive(false);
         }
     }
 
@@ -98,20 +127,18 @@ public class SolidSphereFollower : NetworkBehaviour
     {
         if (!_isTestRunningNet.Value) return;
 
-        // RESTORED: Absolute placement rule tracking from your original script
-        if (headset != null) {
-            if (_currentPhaseNet.Value == 3) transform.position = headset.TransformPoint(_localNosePos);
-            else if (_currentPhaseNet.Value == 4) transform.position = headset.position + new Vector3(0, phase4YOffset, 0);
-            else transform.position = headset.position;
-        }
+        UpdateAssessmentAnchorPosition();
+        UpdateAvatarOverlay();
 
-        // Evaluate proximity intersections on all clients for immediate responsive client-side audio/visual feedback
-        EvaluateProximityIntersections();
+        if (ColocationRoleHelper.IsLocalPatient())
+        {
+            EvaluateProximityIntersections();
+        }
 
         // --- HOST / SERVER ONLY TIMING LAYER ---
         if (!IsServer) return;
 
-        if (SessionRoleManager.Instance != null && SessionRoleManager.Instance.LocalRole != SessionRoleManager.UserRole.Patient)
+        if (!ColocationRoleHelper.IsLocalPatient())
         {
             return;
         }
@@ -132,12 +159,18 @@ public class SolidSphereFollower : NetworkBehaviour
 
     void HandleCalibration()
     {
+        if (!ColocationRoleHelper.IsLocalPatient()) return;
+
         if (OVRInput.GetDown(OVRInput.RawButton.A) || Input.GetKeyDown(KeyCode.Space))
         {
             if (headset != null && rightHand != null) 
             {
                 _calibratedNoseDistance = Vector3.Distance(headset.position, rightHand.position);
                 _localNosePos = headset.InverseTransformPoint(rightHand.position);
+                if (IsServer)
+                {
+                    _localNosePosNet.Value = _localNosePos;
+                }
                 if (voxelGridManager != null) 
                 {
                     voxelGridManager.ResetAllVoxelData();
@@ -229,18 +262,224 @@ public class SolidSphereFollower : NetworkBehaviour
         _totalSpheresPerPhase[trackingIdx, qIndex]++;
 
         // RESTORED: Only mirrors spheres down pipeline if the original criteria match
-        if (_currentPhaseNet.Value == 3 && _isPhase3RearPartNet.Value && avatarMirror != null && movinAvatar.activeInHierarchy)
+        if (_currentPhaseNet.Value == 3 && _isPhase3RearPartNet.Value && avatarMirror != null && IsAvatarPresentationActive())
         {
-            avatarMirror.CreateMirrorSphere(localPos, id, qIndex, scale);
+            BroadcastMirrorSphereCreate(localPos, id, qIndex, scale);
         }
 
         var script = bubble.GetComponent<DisappearOnSelect>();
         if (script != null) {
             script.OnDestroyed = (isRight) => {
                 HandleHit(trackingIdx, qIndex, isRight);
-                if (avatarMirror != null && movinAvatar.activeInHierarchy) avatarMirror.PopMirrorSphere(id);
+                if (_currentPhaseNet.Value == 3 && _isPhase3RearPartNet.Value && avatarMirror != null && IsAvatarPresentationActive())
+                {
+                    BroadcastMirrorSpherePop(id);
+                }
             };
         }
+    }
+
+    void UpdateAssessmentAnchorPosition()
+    {
+        if (!ShouldDriveAssessmentFromLocalPatient()) return;
+        if (headset == null) return;
+
+        if (_currentPhaseNet.Value == 3)
+        {
+            transform.position = headset.TransformPoint(_localNosePos);
+        }
+        else if (_currentPhaseNet.Value == 4)
+        {
+            transform.position = headset.position + new Vector3(0, phase4YOffset, 0);
+        }
+        else
+        {
+            transform.position = headset.position;
+        }
+    }
+
+    void UpdateAvatarOverlay()
+    {
+        bool shouldShowAvatar = _currentPhaseNet.Value > 0;
+        bool shouldShowMirror = _currentPhaseNet.Value == 3 && _isPhase3RearPartNet.Value;
+
+        if (avatarMirror != null)
+        {
+            avatarMirror.gameObject.SetActive(shouldShowMirror);
+        }
+
+        if (!ShouldDriveAssessmentFromLocalPatient())
+        {
+            return;
+        }
+
+        if (movinAvatar == null || headset == null) return;
+
+        if (_currentPhaseNet.Value == 3 && _isPhase3RearPartNet.Value)
+        {
+            Vector3 forwardDirection = headset.forward;
+            forwardDirection.y = 0f;
+            if (forwardDirection.sqrMagnitude < 0.001f)
+            {
+                forwardDirection = headset.forward;
+            }
+            forwardDirection.Normalize();
+
+            movinAvatar.transform.position = headset.position + (forwardDirection * avatarForwardOffsetPhase3Rear);
+            movinAvatar.transform.rotation = Quaternion.LookRotation(-forwardDirection, Vector3.up);
+        }
+        else
+        {
+            movinAvatar.transform.position = headset.position;
+            movinAvatar.transform.rotation = headset.rotation;
+        }
+
+        if (avatarMirror != null && avatarHead != null)
+        {
+            avatarMirror.transform.position = avatarHead.position;
+            avatarMirror.transform.rotation = avatarHead.rotation;
+        }
+
+        ResolveAvatarHandPoses(out Transform leftPoseSource, out Transform rightPoseSource);
+
+        if (movinAvatar != null)
+        {
+            movinAvatar.SetActive(shouldShowAvatar);
+        }
+
+        if (_digitalTwinSync != null)
+        {
+            _digitalTwinSync.PublishPatientPose(
+                shouldShowAvatar,
+                movinAvatar.transform.position,
+                movinAvatar.transform.rotation,
+                leftPoseSource,
+                rightPoseSource);
+        }
+    }
+
+    void ResolveAvatarReferences()
+    {
+        if (avatarHead == null && avatarMirror != null)
+        {
+            avatarHead = avatarMirror.headReference;
+        }
+
+        if (avatarLeftHand == null && movinAvatar != null)
+        {
+            avatarLeftHand = FindChildTransform(movinAvatar.transform, "LeftHand", "left_hand", "Hand_L", "LeftHandAnchor");
+        }
+
+        if (avatarRightHand == null && movinAvatar != null)
+        {
+            avatarRightHand = FindChildTransform(movinAvatar.transform, "RightHand", "right_hand", "Hand_R", "RightHandAnchor");
+        }
+
+        if (avatarLeftHand == null) avatarLeftHand = leftHand;
+        if (avatarRightHand == null) avatarRightHand = rightHand;
+    }
+
+    void ResolveAvatarHandPoses(out Transform leftPoseSource, out Transform rightPoseSource)
+    {
+        leftPoseSource = avatarLeftHand != null ? avatarLeftHand : leftHand;
+        rightPoseSource = avatarRightHand != null ? avatarRightHand : rightHand;
+    }
+
+    Transform FindChildTransform(Transform root, params string[] candidateNames)
+    {
+        if (root == null) return null;
+
+        Transform[] children = root.GetComponentsInChildren<Transform>(true);
+        foreach (Transform child in children)
+        {
+            string lowered = child.name.ToLowerInvariant();
+            foreach (string candidate in candidateNames)
+            {
+                if (lowered.Contains(candidate.ToLowerInvariant()))
+                {
+                    return child;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    bool ShouldDriveAssessmentFromLocalPatient()
+    {
+        if (SimpleRelayManager.Instance == null && SessionRoleManager.Instance == null)
+        {
+            return true;
+        }
+
+        return ColocationRoleHelper.IsLocalPatient();
+    }
+
+    bool IsAvatarPresentationActive()
+    {
+        if (_digitalTwinSync != null)
+        {
+            return _digitalTwinSync.IsAvatarVisible;
+        }
+
+        return movinAvatar != null && movinAvatar.activeSelf;
+    }
+
+    void SetAvatarPresentationActive(bool active)
+    {
+        if (movinAvatar != null)
+        {
+            movinAvatar.SetActive(active);
+        }
+
+        if (_digitalTwinSync != null && IsServer)
+        {
+            ResolveAvatarHandPoses(out Transform leftPoseSource, out Transform rightPoseSource);
+            _digitalTwinSync.PublishPatientPose(
+                active,
+                movinAvatar != null ? movinAvatar.transform.position : Vector3.zero,
+                movinAvatar != null ? movinAvatar.transform.rotation : Quaternion.identity,
+                leftPoseSource,
+                rightPoseSource);
+        }
+    }
+
+    void BroadcastMirrorSphereCreate(Vector3 localPos, int id, int qIndex, float scale)
+    {
+        CreateMirrorSphereLocal(localPos, id, qIndex, scale);
+        SyncMirrorSphereCreateClientRpc(localPos, id, qIndex, scale);
+    }
+
+    void BroadcastMirrorSpherePop(int id)
+    {
+        PopMirrorSphereLocal(id);
+        SyncMirrorSpherePopClientRpc(id);
+    }
+
+    void CreateMirrorSphereLocal(Vector3 localPos, int id, int qIndex, float scale)
+    {
+        if (avatarMirror == null) return;
+        avatarMirror.CreateMirrorSphere(localPos, id, qIndex, scale);
+    }
+
+    void PopMirrorSphereLocal(int id)
+    {
+        if (avatarMirror == null) return;
+        avatarMirror.PopMirrorSphere(id);
+    }
+
+    [ClientRpc]
+    void SyncMirrorSphereCreateClientRpc(Vector3 localPos, int id, int qIndex, float scale)
+    {
+        if (IsServer) return;
+        CreateMirrorSphereLocal(localPos, id, qIndex, scale);
+    }
+
+    [ClientRpc]
+    void SyncMirrorSpherePopClientRpc(int id)
+    {
+        if (IsServer) return;
+        PopMirrorSphereLocal(id);
     }
 
     void EvaluateProximityIntersections()
@@ -268,7 +507,7 @@ public class SolidSphereFollower : NetworkBehaviour
 
         // 2. Active Virtual Avatar Mirror Overlap System (Phase 3 Rear Specific)
         if (_currentPhaseNet.Value == 3 && _isPhase3RearPartNet.Value && avatarMirror != null && 
-            movinAvatar.activeInHierarchy && avatarLeftHand != null && avatarRightHand != null)
+            IsAvatarPresentationActive())
         {
             // RESTORED: Re-synchronized the mirror anchor position explicitly to the avatar's bone configuration
             if (avatarHead != null)
@@ -435,12 +674,8 @@ public class SolidSphereFollower : NetworkBehaviour
         _timerNet.Value = GetDurationForPhase(phase, _isPhase3RearPartNet.Value); 
         _bubbleIdCounter = 0;
 
-        // RESTORED: Only activate the avatar structure in Phase 3 Rear per your original design specification
-        if (movinAvatar != null) 
-        {
-            movinAvatar.SetActive(_currentPhaseNet.Value == 3 && _isPhase3RearPartNet.Value);
-        }
-        
+        SetAvatarPresentationActive(_currentPhaseNet.Value > 0);
+
         if (avatarMirror != null)
         {
             avatarMirror.gameObject.SetActive(_currentPhaseNet.Value == 3 && _isPhase3RearPartNet.Value);
@@ -482,7 +717,7 @@ public class SolidSphereFollower : NetworkBehaviour
                 Destroy(child); // Destroys the NetworkObject across all connected clients automatically
         }
 
-        if (movinAvatar != null) movinAvatar.SetActive(false);
+        SetAvatarPresentationActive(false);
         if (avatarMirror != null) avatarMirror.gameObject.SetActive(false);
         
         if (uiPanelController != null)
