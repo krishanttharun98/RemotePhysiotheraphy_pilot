@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8283469876653332719}
-  - component: {fileID: 5667910942717986484}
   - component: {fileID: 2575637702681207072}
   m_Layer: 0
   m_Name: RWS
@@ -33,31 +32,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5667910942717986484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4335956180126919152}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 2169475886
-  InScenePlacedSourceGlobalObjectIdHash: 2169475886
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 1
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!114 &2575637702681207072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,20 +44,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a669ea1dcbac4f9e90c9a2b044a5821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SolidSphereFollower
-  ShowTopMostFoldoutHeaderGroup: 1
   headset: {fileID: 0}
+  leftHand: {fileID: 0}
   rightHand: {fileID: 0}
   movinAvatar: {fileID: 5331931275583361548, guid: 9224ed2e0ce3a42ddb1564eb1d81cfbc, type: 3}
   avatarHead: {fileID: 4806752104318322870, guid: 9224ed2e0ce3a42ddb1564eb1d81cfbc, type: 3}
+  avatarLeftHand: {fileID: 0}
+  avatarRightHand: {fileID: 0}
   avatarMirror: {fileID: 1149594396392649643, guid: 9224ed2e0ce3a42ddb1564eb1d81cfbc, type: 3}
-  longitudeSegments: 16
-  spherePrefab: {fileID: 4112870948587485097, guid: a054a9700efc8457888711351c2c1214, type: 3}
+  longitudeSegments: 24
+  waterBubblePrefab: {fileID: 4112870948587485097, guid: a054a9700efc8457888711351c2c1214, type: 3}
   quadrantMaterials:
   - {fileID: 2100000, guid: 7e2f5fefb09d1445eaa8aedc34bd431f, type: 2}
   - {fileID: 2100000, guid: 819f461d604dc4f62acc2ea9b142832f, type: 2}
   - {fileID: 2100000, guid: 03b06b5c12a9a4a60973b47a95af0285, type: 2}
   - {fileID: 2100000, guid: 9aeb4d1654fb54fe7b143fbdcdcfc7e9, type: 2}
+  transparentBackgroundMaterial: {fileID: 0}
   noseBuffer: 0.05
   phase4YOffset: -0.5
-  testDuration: 15
+  phase1Duration: 15
+  phase2Duration: 15
+  phase3FrontDuration: 15
+  phase3RearDuration: 15
+  phase4Duration: 15
+  uiPanelController: {fileID: 0}
   targetVisualSize: 0.045
+  useRestBetweenPhases: 1
+  phase4Radii:
+  - 0.15
+  - 0.3
+  - 0.45
+  - 0.6
