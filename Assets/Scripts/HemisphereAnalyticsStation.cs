@@ -17,6 +17,8 @@ public class HemisphereAnalyticsStation : MonoBehaviour
 
     [Header("Layout")]
     public float sideOffset = 1.2f;
+    [Tooltip("If true, draws the full coloured quadrant reference shell. Off = pop heatmap overlay only.")]
+    public bool showReferenceShell = false;
 
     [Header("2D Heatmap Overlay")]
     public Material heatmapOverlayMaterial;
@@ -152,11 +154,9 @@ public class HemisphereAnalyticsStation : MonoBehaviour
         Vector3 anchor = voxelGridManager.StationRoot != null
             ? voxelGridManager.StationRoot.position
             : transform.position;
-
         Vector3 right = voxelGridManager.placementCylinderGizmo != null
             ? voxelGridManager.placementCylinderGizmo.transform.right
             : transform.right;
-
         _analyticsRoot.SetPositionAndRotation(anchor + right * sideOffset, Quaternion.identity);
     }
 
@@ -165,7 +165,7 @@ public class HemisphereAnalyticsStation : MonoBehaviour
         _displayingPhase = -1;
 
         if (_hemisphereBase != null) Destroy(_hemisphereBase);
-        if (solidSphereFollower != null)
+        if (showReferenceShell && solidSphereFollower != null)
             _hemisphereBase = solidSphereFollower.BuildAlignedQuadrantSphere(_analyticsRoot);
 
         // Bubbles spawn after this callback; overlay rebuilds on BubbleSpawned events.
@@ -330,7 +330,7 @@ public class HemisphereAnalyticsStation : MonoBehaviour
 
         if (_hemisphereBase != null) Destroy(_hemisphereBase);
 
-        if (solidSphereFollower != null && voxelGridManager != null && voxelGridManager.IsStationLocked)
+        if (showReferenceShell && solidSphereFollower != null && voxelGridManager != null && voxelGridManager.IsStationLocked)
             _hemisphereBase = solidSphereFollower.BuildAlignedQuadrantSphere(_analyticsRoot);
 
         RebuildHeatmapOverlay();

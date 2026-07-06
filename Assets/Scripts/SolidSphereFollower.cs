@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,6 +16,9 @@ public class SolidSphereFollower : MonoBehaviour
     public Transform avatarHead;
     public Transform avatarLeftHand;
     public Transform avatarRightHand;
+    [Tooltip("Middle fingertip of the mirrored avatar (Phase 3 rear). Auto-resolved if empty.")]
+    public Transform avatarLeftMiddleTip;
+    public Transform avatarRightMiddleTip;
     public AvatarSphereMirror avatarMirror;
 
     [Header("Structure")]
@@ -52,6 +54,8 @@ public class SolidSphereFollower : MonoBehaviour
     public event Action<int, bool> PhaseCompleted;
     public event Action TestEnded;
     public event Action<bool> RestStateChanged;
+    public event Action<bool> TaskStartPromptChanged;
+    public event Action<bool> NoseCalibrationChanged;
 
     // localPos, quadrant, scale, lonIdx, latIdx, ringIdx (-1 except phase 4)
     public event Action<Vector3, int, float, int, int, int> BubbleSpawned;
@@ -62,6 +66,9 @@ public class SolidSphereFollower : MonoBehaviour
     float _timer;
     bool _isTestRunning = true;
     bool _isResting;
+    bool _awaitingTaskStart = true;
+    bool _taskStartConsumed;
+    bool _noseCalibrating;
 
     float _userReach;
     float _calibratedNoseDistance = 0.15f;
@@ -75,6 +82,8 @@ public class SolidSphereFollower : MonoBehaviour
     public bool IsPhase3Rear => _isPhase3Rear;
     public bool IsResting => _isResting;
     public bool IsTestRunning => _isTestRunning;
+    public bool IsAwaitingTaskStart => _awaitingTaskStart;
+    public bool IsNoseCalibrating => _noseCalibrating;
     public Transform RwsCenter => transform;
 
     public int CurrentHistoryIndex
@@ -151,20 +160,58 @@ public class SolidSphereFollower : MonoBehaviour
 
         if (movinAvatar != null) movinAvatar.SetActive(false);
 
+        ResolveAvatarHandReferences();
+
         if (headset != null && rightHand != null)
             _userReach = Vector3.Distance(headset.position, rightHand.position);
         if (_userReach < 0.2f) _userReach = 0.6f;
 
         _currentPhase = 0;
         _isPhase3Rear = false;
-        _timer = 10f;
-        _isTestRunning = true;
+        _timer = 0f;
+        _isTestRunning = false;
         _isResting = false;
+        _awaitingTaskStart = true;
+        _taskStartConsumed = false;
+        _noseCalibrating = false;
+        TaskStartPromptChanged?.Invoke(true);
+        EnsureRuntimePanels();
+    }
+
+    void EnsureRuntimePanels()
+    {
+        if (FindObjectOfType<RWSPhaseScorePanel>() == null)
+        {
+            var scoreGo = new GameObject("RWSPhaseScorePanel");
+            var scorePanel = scoreGo.AddComponent<RWSPhaseScorePanel>();
+            scorePanel.solidSphereFollower = this;
+        }
+
+        if (FindObjectOfType<RWSCalibrationPanel>() == null)
+        {
+            var calGo = new GameObject("RWSCalibrationPanel");
+            var calPanel = calGo.AddComponent<RWSCalibrationPanel>();
+            calPanel.solidSphereFollower = this;
+        }
     }
 
     void Update()
     {
-        if (_isResting || !_isTestRunning) return;
+        if (_isResting) return;
+
+        if (_awaitingTaskStart)
+        {
+            HandleAwaitTaskStart();
+            return;
+        }
+
+        if (_noseCalibrating)
+        {
+            HandleNoseCalibration();
+            return;
+        }
+
+        if (!_isTestRunning) return;
 
         if (headset != null)
         {
@@ -175,31 +222,55 @@ public class SolidSphereFollower : MonoBehaviour
 
         EvaluateProximityIntersections();
 
-        if (_currentPhase == 0) HandleCalibration();
-        else
+        if (_currentPhase > 0)
         {
             _timer -= Time.deltaTime;
             if (_timer <= 0f) OnPhaseTimerExpired();
         }
     }
 
-    void HandleCalibration()
+    void HandleAwaitTaskStart()
     {
-        if (!OVRInput.GetDown(OVRInput.RawButton.A) && !Input.GetKeyDown(KeyCode.Space)) return;
+        if (_taskStartConsumed) return;
 
-        if (headset != null && rightHand != null)
+        if (OVRInput.GetDown(OVRInput.RawButton.Y) || Input.GetKeyDown(KeyCode.Y))
         {
-            _calibratedNoseDistance = Vector3.Distance(headset.position, rightHand.position);
-            _localNosePos = headset.InverseTransformPoint(rightHand.position);
+            _taskStartConsumed = true;
+            _awaitingTaskStart = false;
+            TaskStartPromptChanged?.Invoke(false);
+            _isTestRunning = true;
+            StartPhase(1);
         }
-
-        StartCoroutine(ShowCalibrationSuccess());
     }
 
-    IEnumerator ShowCalibrationSuccess()
+    void HandleNoseCalibration()
     {
-        yield return new WaitForSeconds(2f);
-        AdvancePhase();
+        if (!OVRInput.GetDown(OVRInput.RawButton.A) && !Input.GetKeyDown(KeyCode.Space)) return;
+        if (headset == null || rightHand == null) return;
+
+        _calibratedNoseDistance = Vector3.Distance(headset.position, rightHand.position);
+        _localNosePos = headset.InverseTransformPoint(rightHand.position);
+        CompleteNoseCalibration();
+    }
+
+    void CompleteNoseCalibration()
+    {
+        _noseCalibrating = false;
+        NoseCalibrationChanged?.Invoke(false);
+        _isPhase3Rear = false;
+        _isTestRunning = true;
+        StartPhase(3);
+    }
+
+    void EnterNoseCalibration()
+    {
+        _noseCalibrating = true;
+        _isTestRunning = false;
+        ClearAllChildren();
+
+        if (movinAvatar != null) movinAvatar.SetActive(false);
+        if (avatarMirror != null) avatarMirror.gameObject.SetActive(false);
+        NoseCalibrationChanged?.Invoke(true);
     }
 
     public void BuildSetup()
@@ -292,13 +363,20 @@ public class SolidSphereFollower : MonoBehaviour
         script.OnDestroyed = isRight =>
         {
             HandleHit(trackingIdx, qIndex, isRight);
-            if (avatarMirror != null && movinAvatar != null && movinAvatar.activeInHierarchy)
-                avatarMirror.PopMirrorSphere(id);
+            PopMirrorBubblePair(id);
             BubblePopped?.Invoke(localPos, qIndex, scale, lonIdx, latIdx, ringIdx);
         };
     }
 
     void EvaluateProximityIntersections()
+    {
+        EvaluateLiveControllerPops();
+
+        if (_currentPhase == 3 && _isPhase3Rear)
+            EvaluateMirrorFingerPops();
+    }
+
+    void EvaluateLiveControllerPops()
     {
         if (rightHand == null || leftHand == null) return;
 
@@ -320,53 +398,146 @@ public class SolidSphereFollower : MonoBehaviour
                 break;
             }
         }
-
-        if (_currentPhase != 3 || !_isPhase3Rear || avatarMirror == null ||
-            movinAvatar == null || !movinAvatar.activeInHierarchy ||
-            avatarLeftHand == null || avatarRightHand == null) return;
-
-        if (avatarHead != null)
-        {
-            avatarMirror.transform.position = avatarHead.position;
-            avatarMirror.transform.rotation = avatarHead.rotation;
-        }
-
-        foreach (Transform mirrorChild in avatarMirror.transform)
-        {
-            float mirrorInteractRadius = targetVisualSize * 0.35f * 1.5f;
-            if (Vector3.Distance(mirrorChild.position, avatarRightHand.position) < mirrorInteractRadius)
-            {
-                int id = GetIdFromMirroredObjName(mirrorChild.name);
-                avatarMirror.PopMirrorSphere(id);
-                TriggerMainBubblePopById(id, true);
-                break;
-            }
-
-            if (Vector3.Distance(mirrorChild.position, avatarLeftHand.position) < mirrorInteractRadius)
-            {
-                int id = GetIdFromMirroredObjName(mirrorChild.name);
-                avatarMirror.PopMirrorSphere(id);
-                TriggerMainBubblePopById(id, false);
-                break;
-            }
-        }
     }
 
-    static int GetIdFromMirroredObjName(string name)
+    void EvaluateMirrorFingerPops()
     {
-        string[] parts = name.Split('_');
-        return parts.Length > 1 && int.TryParse(parts[1], out int id) ? id : -1;
+        if (avatarMirror == null || movinAvatar == null || !movinAvatar.activeInHierarchy) return;
+
+        ResolveAvatarHandReferences();
+
+        float mirrorRadius = CurrentBubbleScale * 1.35f;
+
+        if (avatarRightMiddleTip != null &&
+            avatarMirror.TryPopAtPoint(avatarRightMiddleTip.position, mirrorRadius, out int rightId))
+        {
+            PopLiveBubbleById(rightId, true);
+        }
+
+        if (avatarLeftMiddleTip != null &&
+            avatarMirror.TryPopAtPoint(avatarLeftMiddleTip.position, mirrorRadius, out int leftId))
+        {
+            PopLiveBubbleById(leftId, false);
+        }
     }
 
-    void TriggerMainBubblePopById(int id, bool isRightHand)
+    void PopMirrorBubblePair(int id)
+    {
+        if (_currentPhase != 3 || !_isPhase3Rear || avatarMirror == null ||
+            movinAvatar == null || !movinAvatar.activeInHierarchy) return;
+        avatarMirror.PopMirrorSphere(id);
+    }
+
+    void PopLiveBubbleById(int id, bool isRightHand)
     {
         foreach (Transform child in transform)
         {
             if (child.name != $"Bubble_{id}") continue;
             DisappearOnSelect script = child.GetComponent<DisappearOnSelect>();
             if (script != null) script.Pop(isRightHand);
-            break;
+            return;
         }
+    }
+
+    void ConfigureMirrorForPhase3Rear()
+    {
+        if (avatarMirror == null) return;
+
+        if (avatarMirror.headReference == null && avatarHead != null)
+            avatarMirror.headReference = avatarHead;
+
+        if (avatarMirror.spherePrefab == null && waterBubblePrefab != null)
+            avatarMirror.spherePrefab = waterBubblePrefab;
+
+        if (quadrantMaterials != null && quadrantMaterials.Length >= 4 &&
+            (avatarMirror.quadrantMaterials == null || avatarMirror.quadrantMaterials.Length == 0))
+        {
+            avatarMirror.quadrantMaterials = quadrantMaterials;
+        }
+    }
+
+    void ResolveAvatarHandReferences()
+    {
+        if (movinAvatar == null) return;
+
+        Transform root = movinAvatar.transform;
+        if (avatarLeftMiddleTip == null)
+            avatarLeftMiddleTip = FindAvatarBone(root, "Left_MiddleDistalEnd", "l_middle_finger_tip", "left_middle_tip", "b_l_middle3", "hand_l_middle_tip");
+        if (avatarRightMiddleTip == null)
+            avatarRightMiddleTip = FindAvatarBone(root, "Right_MiddleDistalEnd", "r_middle_finger_tip", "right_middle_tip", "b_r_middle3", "hand_r_middle_tip");
+        if (avatarLeftMiddleTip == null)
+            avatarLeftMiddleTip = FindAvatarBoneBySide(root, true, "middletip", "middle_tip", "middle3");
+        if (avatarRightMiddleTip == null)
+            avatarRightMiddleTip = FindAvatarBoneBySide(root, false, "middletip", "middle_tip", "middle3");
+
+        if (avatarLeftHand == null)
+            avatarLeftHand = FindAvatarBone(root, "b_l_wrist", "left_hand", "lefthand", "hand_l");
+        if (avatarRightHand == null)
+            avatarRightHand = FindAvatarBone(root, "b_r_wrist", "right_hand", "righthand", "hand_r");
+
+        if (avatarLeftMiddleTip == null && avatarLeftHand != null)
+            avatarLeftMiddleTip = avatarLeftHand;
+        if (avatarRightMiddleTip == null && avatarRightHand != null)
+            avatarRightMiddleTip = avatarRightHand;
+    }
+
+    static Transform FindAvatarBone(Transform root, params string[] nameHints)
+    {
+        Transform[] all = root.GetComponentsInChildren<Transform>(true);
+        foreach (string hint in nameHints)
+        {
+            foreach (Transform t in all)
+            {
+                if (t.name.Equals(hint, System.StringComparison.OrdinalIgnoreCase))
+                    return t;
+            }
+        }
+
+        foreach (string hint in nameHints)
+        {
+            foreach (Transform t in all)
+            {
+                if (t.name.IndexOf(hint, System.StringComparison.OrdinalIgnoreCase) >= 0)
+                    return t;
+            }
+        }
+
+        return null;
+    }
+
+    static Transform FindAvatarBoneBySide(Transform root, bool leftSide, params string[] nameHints)
+    {
+        Transform[] all = root.GetComponentsInChildren<Transform>(true);
+        string[] sideTokens = leftSide
+            ? new[] { "l_", "_l", "left", "hand_l" }
+            : new[] { "r_", "_r", "right", "hand_r" };
+        string[] blockTokens = leftSide
+            ? new[] { "right", "r_", "_r", "hand_r" }
+            : new[] { "left", "l_", "_l", "hand_l" };
+
+        foreach (string hint in nameHints)
+        {
+            foreach (Transform t in all)
+            {
+                string n = t.name.ToLowerInvariant();
+                if (n.IndexOf(hint, System.StringComparison.OrdinalIgnoreCase) < 0) continue;
+                if (!ContainsAny(n, sideTokens)) continue;
+                if (ContainsAny(n, blockTokens)) continue;
+                return t;
+            }
+        }
+
+        return null;
+    }
+
+    static bool ContainsAny(string value, string[] tokens)
+    {
+        foreach (string token in tokens)
+        {
+            if (value.Contains(token))
+                return true;
+        }
+        return false;
     }
 
     void OnPhaseTimerExpired()
@@ -391,7 +562,6 @@ public class SolidSphereFollower : MonoBehaviour
     {
         if (!_isResting) return;
         _isResting = false;
-        _isTestRunning = true;
         RestStateChanged?.Invoke(false);
         AdvancePhase();
     }
@@ -402,6 +572,10 @@ public class SolidSphereFollower : MonoBehaviour
         {
             _isPhase3Rear = true;
             StartPhase(3);
+        }
+        else if (_currentPhase == 2)
+        {
+            EnterNoseCalibration();
         }
         else if (_currentPhase < 4)
         {
@@ -420,7 +594,15 @@ public class SolidSphereFollower : MonoBehaviour
 
         bool phase3Rear = phase == 3 && _isPhase3Rear;
         if (movinAvatar != null) movinAvatar.SetActive(phase3Rear);
-        if (avatarMirror != null) avatarMirror.gameObject.SetActive(phase3Rear);
+        if (avatarMirror != null)
+        {
+            avatarMirror.gameObject.SetActive(phase3Rear);
+            if (phase3Rear)
+            {
+                ConfigureMirrorForPhase3Rear();
+                ResolveAvatarHandReferences();
+            }
+        }
 
         // Listeners must create per-phase grid data before bubbles spawn.
         PhaseStarted?.Invoke(_currentPhase, _isPhase3Rear);

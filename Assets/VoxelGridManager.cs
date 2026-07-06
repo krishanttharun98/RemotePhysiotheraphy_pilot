@@ -97,8 +97,6 @@ public class VoxelGridManager : MonoBehaviour
     private readonly List<GameObject> _historyMarkerObjects = new List<GameObject>();
 
     private int _displayingPhase = -1; // -1 = render live
-
-    // Per-phase bubble grid for quadrant stats + analytics heatmap (history 1..5).
     private VoxelPhaseGridData _liveGridData;
     private readonly Dictionary<int, VoxelPhaseGridData> _historyGridData = new Dictionary<int, VoxelPhaseGridData>();
     private int _livePhase;
@@ -267,15 +265,28 @@ public class VoxelGridManager : MonoBehaviour
     void UpdateStationAnchor()
     {
         if (_stationRoot == null) return;
+        _stationRoot.SetPositionAndRotation(ComputeStationAnchorPosition(), Quaternion.identity);
+    }
 
+    // Live RWS Phase 4 centres on the user's trunk (headset + phase4YOffset). Match that on the voxel twin.
+    Vector3 ComputeStationAnchorPosition()
+    {
         Vector3 pos;
         if (!_isPlacingGrid && voxelAvatarHead != null && voxelAvatarHead.gameObject.activeInHierarchy)
-            pos = voxelAvatarHead.position;                       // follow the twin's head
+            pos = voxelAvatarHead.position;
         else
-            pos = placementCylinderGizmo.transform.position;      // before lock / no head assigned
+            pos = placementCylinderGizmo.transform.position;
 
-        // Identity rotation so coordinates match the live RWS world frame (translational only).
-        _stationRoot.SetPositionAndRotation(pos, Quaternion.identity);
+        if (UsesTrunkAnchor() && solidSphereFollower != null)
+            pos.y += solidSphereFollower.phase4YOffset;
+
+        return pos;
+    }
+
+    bool UsesTrunkAnchor()
+    {
+        if (_displayingPhase == 5) return true;
+        return _displayingPhase == -1 && _livePhase == 4;
     }
 
     // ---------------- Placement ----------------
@@ -325,6 +336,8 @@ public class VoxelGridManager : MonoBehaviour
         ClearLiveMarkerObjects();
         _liveMarkers.Clear();
         ClearHistoryMarkerObjects();
+
+        UpdateStationAnchor();
 
         if (solidSphereFollower != null)
         {
@@ -522,6 +535,7 @@ public class VoxelGridManager : MonoBehaviour
         if (phase < 1 || phase > 5) return;
 
         _displayingPhase = phase;
+        UpdateStationAnchor();
         ClearLiveMarkerObjects();
         ClearHistoryMarkerObjects();
         SetQuadrantWedgesActive(false);
@@ -535,6 +549,7 @@ public class VoxelGridManager : MonoBehaviour
     public void ClearGridDisplay()
     {
         _displayingPhase = -1;
+        UpdateStationAnchor();
         ClearHistoryMarkerObjects();
         SetQuadrantWedgesActive(true);
         // Restore live markers for the current/last phase.

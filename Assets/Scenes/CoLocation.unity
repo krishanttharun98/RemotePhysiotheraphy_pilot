@@ -829,7 +829,7 @@ Transform:
   m_GameObject: {fileID: 108089097}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.09716, y: 0.34772, z: -0.49048}
+  m_LocalPosition: {x: 0.114, y: 0.34772, z: -0.49048}
   m_LocalScale: {x: 0.1, y: 0.5, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10433,7 +10433,6 @@ MonoBehaviour:
   spawnDistance: 1
   spawnHeightOffset: -0.1
   enableControllerFallback: 1
-  fallbackResumeButton: 512
 --- !u!114 &1074274297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13391,6 +13390,8 @@ MonoBehaviour:
   voxelAvatarHead: {fileID: 1558672129}
   keepCylinderAvatarAtAnchor: 1
   avatarFloorY: 0
+  stationHeadHeight: 1.65
+  showQuadrantReferenceShell: 0
 --- !u!4 &1323629907
 Transform:
   m_ObjectHideFlags: 0
@@ -13421,6 +13422,7 @@ MonoBehaviour:
   voxelGridManager: {fileID: 1323629906}
   solidSphereFollower: {fileID: 239340825}
   sideOffset: 1.2
+  showReferenceShell: 0
   heatmapOverlayMaterial: {fileID: 2100000, guid: 710feff96970a4ab39be4c437502cf0a, type: 2}
   maxDarkness: 0.85
   overlayRadiusScale: 1.015
@@ -13429,6 +13431,11 @@ MonoBehaviour:
   - {fileID: 2095874713}
   - {fileID: 1266387069}
   - {fileID: 283800297}
+  createWorldSpaceStats: 1
+  statsPanelLocalX: 0.35
+  statsPanelTopY: 0.28
+  statsLabelSpacing: 0.11
+  statsFontSize: 0.045
 --- !u!1 &1332245054
 GameObject:
   m_ObjectHideFlags: 0
