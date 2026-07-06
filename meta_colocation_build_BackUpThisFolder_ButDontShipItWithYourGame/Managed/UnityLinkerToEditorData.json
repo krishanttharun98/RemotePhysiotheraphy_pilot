@@ -1106,14 +1106,6 @@
             "icon": null
           },
           {
-            "name": "PhysicsMaterial",
-            "scenes": [
-              "Assets/Scenes/CoLocation.unity"
-            ],
-            "dependencyType": 0,
-            "icon": null
-          },
-          {
             "name": "Rigidbody",
             "scenes": [
               "Assets/Scenes/CoLocation.unity"

@@ -4468,10 +4468,6 @@ struct NetworkManager_t3C1F76E0C1B39BB363D1C5C7667A5CC90A6CE468_StaticFields
 #endif
 
 
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t NetworkMessageManager_SendMessage_TisTimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471_m3F324491879C6A8677828DBBAC072F30E55F4A59_gshared (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* __this, TimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471* ___0_message, int32_t ___1_delivery, uint64_t* ___2_clientIds, int32_t ___3_numClientIds, const RuntimeMethod* method) ;
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t NetworkMessageManager_SendMessage_TisTimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471_TisRuntimeObject_mC6E22D655D8765FDFB3C5F503B2C1109A651CE13_gshared (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* __this, TimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471* ___0_message, int32_t ___1_delivery, RuntimeObject** ___2_clientIds, const RuntimeMethod* method) ;
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t NetworkMessageManager_SendMessage_TisUnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977_m8233A3460E59E5B018862FD72F978BFDF1347170_gshared (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* __this, UnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977* ___0_message, int32_t ___1_delivery, uint64_t* ___2_clientIds, int32_t ___3_numClientIds, const RuntimeMethod* method) ;
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t NetworkMessageManager_SendMessage_TisUnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977_TisRuntimeObject_m0034C81E06473B370A38595BCA7830218AF778B6_gshared (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* __this, UnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977* ___0_message, int32_t ___1_delivery, RuntimeObject** ___2_clientIds, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t NetworkMessageManager_SendMessage_TisClientRpcMessage_t87E63B082294B32DCA108CF613AC130A54F35793_mAFB12215C9F2EEAE909C5FA628533350988D9815_gshared (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* __this, ClientRpcMessage_t87E63B082294B32DCA108CF613AC130A54F35793* ___0_message, int32_t ___1_delivery, uint64_t* ___2_clientIds, int32_t ___3_numClientIds, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void HalfVector3_NetworkSerialize_TisBufferSerializerReader_t821F6D93FEA6652401EA14C2C96FB7328355A091_m0019C0B7F477D6CECCDA58E2042313C48FD83210_gshared (HalfVector3_t921D176C4A9C03F0C05F55B8440B72BB3730EC02* __this, BufferSerializer_1_t8B54D07A3EDD3D37E1369C511353FC3344A0FF3B ___0_serializer, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BufferSerializer_1_SerializeValue_m0773DBBB39CFDB93D7DE224B29AA3E23DADF8D16_gshared (BufferSerializer_1_t8B54D07A3EDD3D37E1369C511353FC3344A0FF3B* __this, Vector3_t24C512C7B96BBABAD472002D0BA2BDA40A5A80B2* ___0_value, const RuntimeMethod* method) ;
@@ -4687,23 +4683,7 @@ IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t UnsafeList_1_get_Length_m
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t UnsafeList_1_get_Length_mD299B87C8E2D3789AF4B8D9180100B48D949CB60_gshared_inline (UnsafeList_1_tE5BC32881F7561AD5CBF64BB8677113AA7559391* __this, const RuntimeMethod* method) ;
 
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR bool NetworkClient_get_IsServer_m488CD548E37B2D542415841AFEE32E6BD877F931_inline (NetworkClient_t4EB5B562D3C8D21DDD5749455CE80E5B12571F64* __this, const RuntimeMethod* method) ;
-inline int32_t NetworkMessageManager_SendMessage_TisTimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471_m3F324491879C6A8677828DBBAC072F30E55F4A59 (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* __this, TimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471* ___0_message, int32_t ___1_delivery, uint64_t* ___2_clientIds, int32_t ___3_numClientIds, const RuntimeMethod* method)
-{
-	return ((  int32_t (*) (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468*, TimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471*, int32_t, uint64_t*, int32_t, const RuntimeMethod*))NetworkMessageManager_SendMessage_TisTimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471_m3F324491879C6A8677828DBBAC072F30E55F4A59_gshared)(__this, ___0_message, ___1_delivery, ___2_clientIds, ___3_numClientIds, method);
-}
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ArgumentException__ctor_m026938A67AF9D36BB7ED27F80425D7194B514465 (ArgumentException_tAD90411542A20A9C72D5CDA3A84181D8B947A263* __this, String_t* ___0_message, const RuntimeMethod* method) ;
-inline int32_t NetworkMessageManager_SendMessage_TisTimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471_TisRuntimeObject_mC6E22D655D8765FDFB3C5F503B2C1109A651CE13 (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* __this, TimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471* ___0_message, int32_t ___1_delivery, RuntimeObject** ___2_clientIds, const RuntimeMethod* method)
-{
-	return ((  int32_t (*) (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468*, TimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471*, int32_t, RuntimeObject**, const RuntimeMethod*))NetworkMessageManager_SendMessage_TisTimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471_TisRuntimeObject_mC6E22D655D8765FDFB3C5F503B2C1109A651CE13_gshared)(__this, ___0_message, ___1_delivery, ___2_clientIds, method);
-}
-inline int32_t NetworkMessageManager_SendMessage_TisUnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977_m8233A3460E59E5B018862FD72F978BFDF1347170 (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* __this, UnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977* ___0_message, int32_t ___1_delivery, uint64_t* ___2_clientIds, int32_t ___3_numClientIds, const RuntimeMethod* method)
-{
-	return ((  int32_t (*) (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468*, UnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977*, int32_t, uint64_t*, int32_t, const RuntimeMethod*))NetworkMessageManager_SendMessage_TisUnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977_m8233A3460E59E5B018862FD72F978BFDF1347170_gshared)(__this, ___0_message, ___1_delivery, ___2_clientIds, ___3_numClientIds, method);
-}
-inline int32_t NetworkMessageManager_SendMessage_TisUnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977_TisRuntimeObject_m0034C81E06473B370A38595BCA7830218AF778B6 (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* __this, UnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977* ___0_message, int32_t ___1_delivery, RuntimeObject** ___2_clientIds, const RuntimeMethod* method)
-{
-	return ((  int32_t (*) (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468*, UnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977*, int32_t, RuntimeObject**, const RuntimeMethod*))NetworkMessageManager_SendMessage_TisUnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977_TisRuntimeObject_m0034C81E06473B370A38595BCA7830218AF778B6_gshared)(__this, ___0_message, ___1_delivery, ___2_clientIds, method);
-}
 inline int32_t NetworkMessageManager_SendMessage_TisClientRpcMessage_t87E63B082294B32DCA108CF613AC130A54F35793_mAFB12215C9F2EEAE909C5FA628533350988D9815 (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* __this, ClientRpcMessage_t87E63B082294B32DCA108CF613AC130A54F35793* ___0_message, int32_t ___1_delivery, uint64_t* ___2_clientIds, int32_t ___3_numClientIds, const RuntimeMethod* method)
 {
 	return ((  int32_t (*) (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468*, ClientRpcMessage_t87E63B082294B32DCA108CF613AC130A54F35793*, int32_t, uint64_t*, int32_t, const RuntimeMethod*))NetworkMessageManager_SendMessage_TisClientRpcMessage_t87E63B082294B32DCA108CF613AC130A54F35793_mAFB12215C9F2EEAE909C5FA628533350988D9815_gshared)(__this, ___0_message, ___1_delivery, ___2_clientIds, ___3_numClientIds, method);
@@ -5729,352 +5709,6 @@ IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR int32_t CollectionHelper_AssumePo
 inline int32_t UnsafeList_1_get_Length_mD299B87C8E2D3789AF4B8D9180100B48D949CB60_inline (UnsafeList_1_tE5BC32881F7561AD5CBF64BB8677113AA7559391* __this, const RuntimeMethod* method)
 {
 	return ((  int32_t (*) (UnsafeList_1_tE5BC32881F7561AD5CBF64BB8677113AA7559391*, const RuntimeMethod*))UnsafeList_1_get_Length_mD299B87C8E2D3789AF4B8D9180100B48D949CB60_gshared_inline)(__this, method);
-}
-// Method Definition Index: 89670
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t NetworkConnectionManager_SendMessage_TisTimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471_TisRuntimeObject_m8CD45960924AF88401EEB7FA3C1583B57C7255CD_gshared (NetworkConnectionManager_tA2D96DEF071554C2E75CC52EEBC28BF0C977B9D1* __this, TimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471* ___0_message, int32_t ___1_delivery, RuntimeObject** ___2_clientIds, const RuntimeMethod* method) 
-{
-	if (!il2cpp_rgctx_is_initialized(method))
-	{
-		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&IReadOnlyCollection_1_t02F24BFA8317160B96EEE7839D43A61F5149E410_il2cpp_TypeInfo_var);
-		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&IReadOnlyList_1_t1A3980B817C9C841FC942102C2A423C1AAD15C8E_il2cpp_TypeInfo_var);
-		il2cpp_rgctx_method_init(method);
-	}
-	uint64_t* V_0 = NULL;
-	int32_t V_1 = 0;
-	RuntimeObject* V_2 = NULL;
-	int32_t V_3 = 0;
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1764>
-		NetworkClient_t4EB5B562D3C8D21DDD5749455CE80E5B12571F64* L_0 = __this->___LocalClient;
-		NullCheck(L_0);
-		bool L_1;
-		L_1 = NetworkClient_get_IsServer_m488CD548E37B2D542415841AFEE32E6BD877F931_inline(L_0, NULL);
-		if (!L_1)
-		{
-			goto IL_0097;
-		}
-	}
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1766>
-		RuntimeObject** L_2 = ___2_clientIds;
-		RuntimeObject* L_3 = (*(RuntimeObject**)L_2);
-		V_2 = L_3;
-		NullCheck((RuntimeObject*)(V_2));
-		int32_t L_4;
-		L_4 = InterfaceFuncInvoker0< int32_t >::Invoke(0, IReadOnlyCollection_1_t02F24BFA8317160B96EEE7839D43A61F5149E410_il2cpp_TypeInfo_var, (RuntimeObject*)(V_2));
-		if ((uintptr_t)((uintptr_t)L_4) * (uintptr_t)8 > (uintptr_t)kIl2CppUIntPtrMax)
-			IL2CPP_RAISE_MANAGED_EXCEPTION(il2cpp_codegen_get_overflow_exception(), method);
-		intptr_t L_5 = ((intptr_t)il2cpp_codegen_multiply((intptr_t)((uintptr_t)L_4), 8));
-		int8_t* L_6 = (int8_t*) (L_5 ? alloca(L_5) : NULL);
-		memset(L_6, 0, L_5);
-		V_0 = (uint64_t*)(L_6);
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1767>
-		V_1 = 0;
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1768>
-		V_3 = 0;
-		goto IL_006b;
-	}
-
-IL_0030:
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1770>
-		RuntimeObject** L_7 = ___2_clientIds;
-		RuntimeObject* L_8 = (*(RuntimeObject**)L_7);
-		V_2 = L_8;
-		int32_t L_9 = V_3;
-		NullCheck((RuntimeObject*)(V_2));
-		uint64_t L_10;
-		L_10 = InterfaceFuncInvoker1< uint64_t, int32_t >::Invoke(0, IReadOnlyList_1_t1A3980B817C9C841FC942102C2A423C1AAD15C8E_il2cpp_TypeInfo_var, (RuntimeObject*)(V_2), L_9);
-		if (!L_10)
-		{
-			goto IL_0067;
-		}
-	}
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1775>
-		uint64_t* L_11 = V_0;
-		int32_t L_12 = V_1;
-		int32_t L_13 = L_12;
-		V_1 = ((int32_t)il2cpp_codegen_add(L_13, 1));
-		RuntimeObject** L_14 = ___2_clientIds;
-		RuntimeObject* L_15 = (*(RuntimeObject**)L_14);
-		V_2 = L_15;
-		int32_t L_16 = V_3;
-		NullCheck((RuntimeObject*)(V_2));
-		uint64_t L_17;
-		L_17 = InterfaceFuncInvoker1< uint64_t, int32_t >::Invoke(0, IReadOnlyList_1_t1A3980B817C9C841FC942102C2A423C1AAD15C8E_il2cpp_TypeInfo_var, (RuntimeObject*)(V_2), L_16);
-		*((int64_t*)((uint64_t*)il2cpp_codegen_add((intptr_t)L_11, ((intptr_t)il2cpp_codegen_multiply(((intptr_t)L_13), 8))))) = (int64_t)L_17;
-	}
-
-IL_0067:
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1768>
-		int32_t L_18 = V_3;
-		V_3 = ((int32_t)il2cpp_codegen_add(L_18, 1));
-	}
-
-IL_006b:
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1768>
-		int32_t L_19 = V_3;
-		RuntimeObject** L_20 = ___2_clientIds;
-		RuntimeObject* L_21 = (*(RuntimeObject**)L_20);
-		V_2 = L_21;
-		NullCheck((RuntimeObject*)(V_2));
-		int32_t L_22;
-		L_22 = InterfaceFuncInvoker0< int32_t >::Invoke(0, IReadOnlyCollection_1_t02F24BFA8317160B96EEE7839D43A61F5149E410_il2cpp_TypeInfo_var, (RuntimeObject*)(V_2));
-		if ((((int32_t)L_19) < ((int32_t)L_22)))
-		{
-			goto IL_0030;
-		}
-	}
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1778>
-		int32_t L_23 = V_1;
-		if (L_23)
-		{
-			goto IL_0087;
-		}
-	}
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1780>
-		return 0;
-	}
-
-IL_0087:
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1783>
-		NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* L_24 = __this->___MessageManager;
-		TimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471* L_25 = ___0_message;
-		int32_t L_26 = ___1_delivery;
-		uint64_t* L_27 = V_0;
-		int32_t L_28 = V_1;
-		NullCheck(L_24);
-		int32_t L_29;
-		L_29 = NetworkMessageManager_SendMessage_TisTimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471_m3F324491879C6A8677828DBBAC072F30E55F4A59(L_24, L_25, L_26, L_27, L_28, il2cpp_rgctx_method(method->rgctx_data, 5));
-		return L_29;
-	}
-
-IL_0097:
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1787>
-		RuntimeObject** L_30 = ___2_clientIds;
-		RuntimeObject* L_31 = (*(RuntimeObject**)L_30);
-		V_2 = L_31;
-		NullCheck((RuntimeObject*)(V_2));
-		int32_t L_32;
-		L_32 = InterfaceFuncInvoker0< int32_t >::Invoke(0, IReadOnlyCollection_1_t02F24BFA8317160B96EEE7839D43A61F5149E410_il2cpp_TypeInfo_var, (RuntimeObject*)(V_2));
-		if ((!(((uint32_t)L_32) == ((uint32_t)1))))
-		{
-			goto IL_00c5;
-		}
-	}
-	{
-		RuntimeObject** L_33 = ___2_clientIds;
-		RuntimeObject* L_34 = (*(RuntimeObject**)L_33);
-		V_2 = L_34;
-		NullCheck((RuntimeObject*)(V_2));
-		uint64_t L_35;
-		L_35 = InterfaceFuncInvoker1< uint64_t, int32_t >::Invoke(0, IReadOnlyList_1_t1A3980B817C9C841FC942102C2A423C1AAD15C8E_il2cpp_TypeInfo_var, (RuntimeObject*)(V_2), 0);
-		if (!L_35)
-		{
-			goto IL_00d0;
-		}
-	}
-
-IL_00c5:
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1789>
-		ArgumentException_tAD90411542A20A9C72D5CDA3A84181D8B947A263* L_36 = (ArgumentException_tAD90411542A20A9C72D5CDA3A84181D8B947A263*)il2cpp_codegen_object_new(((RuntimeClass*)il2cpp_codegen_initialize_runtime_metadata_inline((uintptr_t*)&ArgumentException_tAD90411542A20A9C72D5CDA3A84181D8B947A263_il2cpp_TypeInfo_var)));
-		ArgumentException__ctor_m026938A67AF9D36BB7ED27F80425D7194B514465(L_36, ((String_t*)il2cpp_codegen_initialize_runtime_metadata_inline((uintptr_t*)&_stringLiteralCB07B1C22296BA726645D49AA3B160029D1FAF89)), NULL);
-		IL2CPP_RAISE_MANAGED_EXCEPTION(L_36, method);
-	}
-
-IL_00d0:
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1792>
-		NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* L_37 = __this->___MessageManager;
-		TimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471* L_38 = ___0_message;
-		int32_t L_39 = ___1_delivery;
-		RuntimeObject** L_40 = ___2_clientIds;
-		NullCheck(L_37);
-		int32_t L_41;
-		L_41 = NetworkMessageManager_SendMessage_TisTimeSyncMessage_t9C58B7AFA7062DD6F727D4E9FFF71448C8630471_TisRuntimeObject_mC6E22D655D8765FDFB3C5F503B2C1109A651CE13(L_37, L_38, L_39, L_40, il2cpp_rgctx_method(method->rgctx_data, 6));
-		return L_41;
-	}
-}
-// Method Definition Index: 89670
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t NetworkConnectionManager_SendMessage_TisUnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977_TisRuntimeObject_m249DA7CC187079FDCC202556A373320FB8C88489_gshared (NetworkConnectionManager_tA2D96DEF071554C2E75CC52EEBC28BF0C977B9D1* __this, UnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977* ___0_message, int32_t ___1_delivery, RuntimeObject** ___2_clientIds, const RuntimeMethod* method) 
-{
-	if (!il2cpp_rgctx_is_initialized(method))
-	{
-		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&IReadOnlyCollection_1_t02F24BFA8317160B96EEE7839D43A61F5149E410_il2cpp_TypeInfo_var);
-		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&IReadOnlyList_1_t1A3980B817C9C841FC942102C2A423C1AAD15C8E_il2cpp_TypeInfo_var);
-		il2cpp_rgctx_method_init(method);
-	}
-	uint64_t* V_0 = NULL;
-	int32_t V_1 = 0;
-	RuntimeObject* V_2 = NULL;
-	int32_t V_3 = 0;
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1764>
-		NetworkClient_t4EB5B562D3C8D21DDD5749455CE80E5B12571F64* L_0 = __this->___LocalClient;
-		NullCheck(L_0);
-		bool L_1;
-		L_1 = NetworkClient_get_IsServer_m488CD548E37B2D542415841AFEE32E6BD877F931_inline(L_0, NULL);
-		if (!L_1)
-		{
-			goto IL_0097;
-		}
-	}
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1766>
-		RuntimeObject** L_2 = ___2_clientIds;
-		RuntimeObject* L_3 = (*(RuntimeObject**)L_2);
-		V_2 = L_3;
-		NullCheck((RuntimeObject*)(V_2));
-		int32_t L_4;
-		L_4 = InterfaceFuncInvoker0< int32_t >::Invoke(0, IReadOnlyCollection_1_t02F24BFA8317160B96EEE7839D43A61F5149E410_il2cpp_TypeInfo_var, (RuntimeObject*)(V_2));
-		if ((uintptr_t)((uintptr_t)L_4) * (uintptr_t)8 > (uintptr_t)kIl2CppUIntPtrMax)
-			IL2CPP_RAISE_MANAGED_EXCEPTION(il2cpp_codegen_get_overflow_exception(), method);
-		intptr_t L_5 = ((intptr_t)il2cpp_codegen_multiply((intptr_t)((uintptr_t)L_4), 8));
-		int8_t* L_6 = (int8_t*) (L_5 ? alloca(L_5) : NULL);
-		memset(L_6, 0, L_5);
-		V_0 = (uint64_t*)(L_6);
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1767>
-		V_1 = 0;
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1768>
-		V_3 = 0;
-		goto IL_006b;
-	}
-
-IL_0030:
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1770>
-		RuntimeObject** L_7 = ___2_clientIds;
-		RuntimeObject* L_8 = (*(RuntimeObject**)L_7);
-		V_2 = L_8;
-		int32_t L_9 = V_3;
-		NullCheck((RuntimeObject*)(V_2));
-		uint64_t L_10;
-		L_10 = InterfaceFuncInvoker1< uint64_t, int32_t >::Invoke(0, IReadOnlyList_1_t1A3980B817C9C841FC942102C2A423C1AAD15C8E_il2cpp_TypeInfo_var, (RuntimeObject*)(V_2), L_9);
-		if (!L_10)
-		{
-			goto IL_0067;
-		}
-	}
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1775>
-		uint64_t* L_11 = V_0;
-		int32_t L_12 = V_1;
-		int32_t L_13 = L_12;
-		V_1 = ((int32_t)il2cpp_codegen_add(L_13, 1));
-		RuntimeObject** L_14 = ___2_clientIds;
-		RuntimeObject* L_15 = (*(RuntimeObject**)L_14);
-		V_2 = L_15;
-		int32_t L_16 = V_3;
-		NullCheck((RuntimeObject*)(V_2));
-		uint64_t L_17;
-		L_17 = InterfaceFuncInvoker1< uint64_t, int32_t >::Invoke(0, IReadOnlyList_1_t1A3980B817C9C841FC942102C2A423C1AAD15C8E_il2cpp_TypeInfo_var, (RuntimeObject*)(V_2), L_16);
-		*((int64_t*)((uint64_t*)il2cpp_codegen_add((intptr_t)L_11, ((intptr_t)il2cpp_codegen_multiply(((intptr_t)L_13), 8))))) = (int64_t)L_17;
-	}
-
-IL_0067:
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1768>
-		int32_t L_18 = V_3;
-		V_3 = ((int32_t)il2cpp_codegen_add(L_18, 1));
-	}
-
-IL_006b:
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1768>
-		int32_t L_19 = V_3;
-		RuntimeObject** L_20 = ___2_clientIds;
-		RuntimeObject* L_21 = (*(RuntimeObject**)L_20);
-		V_2 = L_21;
-		NullCheck((RuntimeObject*)(V_2));
-		int32_t L_22;
-		L_22 = InterfaceFuncInvoker0< int32_t >::Invoke(0, IReadOnlyCollection_1_t02F24BFA8317160B96EEE7839D43A61F5149E410_il2cpp_TypeInfo_var, (RuntimeObject*)(V_2));
-		if ((((int32_t)L_19) < ((int32_t)L_22)))
-		{
-			goto IL_0030;
-		}
-	}
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1778>
-		int32_t L_23 = V_1;
-		if (L_23)
-		{
-			goto IL_0087;
-		}
-	}
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1780>
-		return 0;
-	}
-
-IL_0087:
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1783>
-		NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* L_24 = __this->___MessageManager;
-		UnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977* L_25 = ___0_message;
-		int32_t L_26 = ___1_delivery;
-		uint64_t* L_27 = V_0;
-		int32_t L_28 = V_1;
-		NullCheck(L_24);
-		int32_t L_29;
-		L_29 = NetworkMessageManager_SendMessage_TisUnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977_m8233A3460E59E5B018862FD72F978BFDF1347170(L_24, L_25, L_26, L_27, L_28, il2cpp_rgctx_method(method->rgctx_data, 5));
-		return L_29;
-	}
-
-IL_0097:
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1787>
-		RuntimeObject** L_30 = ___2_clientIds;
-		RuntimeObject* L_31 = (*(RuntimeObject**)L_30);
-		V_2 = L_31;
-		NullCheck((RuntimeObject*)(V_2));
-		int32_t L_32;
-		L_32 = InterfaceFuncInvoker0< int32_t >::Invoke(0, IReadOnlyCollection_1_t02F24BFA8317160B96EEE7839D43A61F5149E410_il2cpp_TypeInfo_var, (RuntimeObject*)(V_2));
-		if ((!(((uint32_t)L_32) == ((uint32_t)1))))
-		{
-			goto IL_00c5;
-		}
-	}
-	{
-		RuntimeObject** L_33 = ___2_clientIds;
-		RuntimeObject* L_34 = (*(RuntimeObject**)L_33);
-		V_2 = L_34;
-		NullCheck((RuntimeObject*)(V_2));
-		uint64_t L_35;
-		L_35 = InterfaceFuncInvoker1< uint64_t, int32_t >::Invoke(0, IReadOnlyList_1_t1A3980B817C9C841FC942102C2A423C1AAD15C8E_il2cpp_TypeInfo_var, (RuntimeObject*)(V_2), 0);
-		if (!L_35)
-		{
-			goto IL_00d0;
-		}
-	}
-
-IL_00c5:
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1789>
-		ArgumentException_tAD90411542A20A9C72D5CDA3A84181D8B947A263* L_36 = (ArgumentException_tAD90411542A20A9C72D5CDA3A84181D8B947A263*)il2cpp_codegen_object_new(((RuntimeClass*)il2cpp_codegen_initialize_runtime_metadata_inline((uintptr_t*)&ArgumentException_tAD90411542A20A9C72D5CDA3A84181D8B947A263_il2cpp_TypeInfo_var)));
-		ArgumentException__ctor_m026938A67AF9D36BB7ED27F80425D7194B514465(L_36, ((String_t*)il2cpp_codegen_initialize_runtime_metadata_inline((uintptr_t*)&_stringLiteralCB07B1C22296BA726645D49AA3B160029D1FAF89)), NULL);
-		IL2CPP_RAISE_MANAGED_EXCEPTION(L_36, method);
-	}
-
-IL_00d0:
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Connection/NetworkConnectionManager.cs:1792>
-		NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* L_37 = __this->___MessageManager;
-		UnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977* L_38 = ___0_message;
-		int32_t L_39 = ___1_delivery;
-		RuntimeObject** L_40 = ___2_clientIds;
-		NullCheck(L_37);
-		int32_t L_41;
-		L_41 = NetworkMessageManager_SendMessage_TisUnnamedMessage_t898AD6C7ED277D4C847E155D992D68ACFB256977_TisRuntimeObject_m0034C81E06473B370A38595BCA7830218AF778B6(L_37, L_38, L_39, L_40, il2cpp_rgctx_method(method->rgctx_data, 6));
-		return L_41;
-	}
 }
 // Method Definition Index: 89670
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t NetworkConnectionManager_SendMessage_TisIl2CppFullySharedGenericAny_TisIl2CppFullySharedGenericAny_m4F6CAAEDA654D8A8668605236708F416567A4581_gshared (NetworkConnectionManager_tA2D96DEF071554C2E75CC52EEBC28BF0C977B9D1* __this, Il2CppFullySharedGenericAny* ___0_message, int32_t ___1_delivery, Il2CppFullySharedGenericAny* ___2_clientIds, const RuntimeMethod* method) 
@@ -7910,7 +7544,7 @@ IL_0011:
 		return L_9;
 	}
 }
-// Method Definition Index: 133828
+// Method Definition Index: 133936
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Task_1_tDF1FF540D7D2248A08580387A39717B7FB7A9CF9* NetworkHandler_DeleteAsync_TisIl2CppFullySharedGenericAny_mC5652EAFF8B3791B804A8226FB7C15864DC45F1A_gshared (NetworkHandler_t837B2329903C4E0294F6C64B2D6668FC3E9C89A1* __this, String_t* ___0_url, RuntimeObject* ___1_headers, const RuntimeMethod* method) 
 {
 	if (!il2cpp_rgctx_is_initialized(method))
@@ -7940,7 +7574,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Task_1_tDF1FF540D7D2248A08580387A39717B7FB7A9
 		return L_4;
 	}
 }
-// Method Definition Index: 133823
+// Method Definition Index: 133931
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Task_1_tDF1FF540D7D2248A08580387A39717B7FB7A9CF9* NetworkHandler_GetAsync_TisIl2CppFullySharedGenericAny_m0130D6B0F7056521E72F41B2CC3403314BD772F2_gshared (NetworkHandler_t837B2329903C4E0294F6C64B2D6668FC3E9C89A1* __this, String_t* ___0_url, RuntimeObject* ___1_headers, const RuntimeMethod* method) 
 {
 	if (!il2cpp_rgctx_is_initialized(method))
@@ -7970,7 +7604,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Task_1_tDF1FF540D7D2248A08580387A39717B7FB7A9
 		return L_4;
 	}
 }
-// Method Definition Index: 133824
+// Method Definition Index: 133932
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Task_1_tDF1FF540D7D2248A08580387A39717B7FB7A9CF9* NetworkHandler_PostAsync_TisIl2CppFullySharedGenericAny_mB9D67DFEAA74241C62F012CA3048D919ADD867A1_gshared (NetworkHandler_t837B2329903C4E0294F6C64B2D6668FC3E9C89A1* __this, String_t* ___0_url, RuntimeObject* ___1_headers, const RuntimeMethod* method) 
 {
 	if (!il2cpp_rgctx_is_initialized(method))
@@ -8000,7 +7634,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Task_1_tDF1FF540D7D2248A08580387A39717B7FB7A9
 		return L_4;
 	}
 }
-// Method Definition Index: 133825
+// Method Definition Index: 133933
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Task_1_t0C4CD3A5BB93A184420D73218644C56C70FDA7E2* NetworkHandler_PostAsync_TisRuntimeObject_mEC9C83DF355F9A0CD4ECDD3F7631CF51C18BBEF7_gshared (NetworkHandler_t837B2329903C4E0294F6C64B2D6668FC3E9C89A1* __this, String_t* ___0_url, String_t* ___1_payload, RuntimeObject* ___2_headers, const RuntimeMethod* method) 
 {
 	if (!il2cpp_rgctx_is_initialized(method))
@@ -8031,7 +7665,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Task_1_t0C4CD3A5BB93A184420D73218644C56C70FDA
 		return L_5;
 	}
 }
-// Method Definition Index: 133825
+// Method Definition Index: 133933
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Task_1_tDF1FF540D7D2248A08580387A39717B7FB7A9CF9* NetworkHandler_PostAsync_TisIl2CppFullySharedGenericAny_m663C1E05BF9394A6C75CB830DFA2030FFFC9041F_gshared (NetworkHandler_t837B2329903C4E0294F6C64B2D6668FC3E9C89A1* __this, String_t* ___0_url, String_t* ___1_payload, RuntimeObject* ___2_headers, const RuntimeMethod* method) 
 {
 	if (!il2cpp_rgctx_is_initialized(method))
@@ -8062,7 +7696,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Task_1_tDF1FF540D7D2248A08580387A39717B7FB7A9
 		return L_5;
 	}
 }
-// Method Definition Index: 133826
+// Method Definition Index: 133934
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Task_1_tDF1FF540D7D2248A08580387A39717B7FB7A9CF9* NetworkHandler_PutAsync_TisIl2CppFullySharedGenericAny_m99F09D2866EC778F63DAC34EA39EF0D4D7C51A65_gshared (NetworkHandler_t837B2329903C4E0294F6C64B2D6668FC3E9C89A1* __this, String_t* ___0_url, RuntimeObject* ___1_payload, RuntimeObject* ___2_headers, const RuntimeMethod* method) 
 {
 	if (!il2cpp_rgctx_is_initialized(method))
@@ -27053,6 +26687,587 @@ IL_03ad:
 		return L_172;
 	}
 }
+// Method Definition Index: 90448
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t NetworkMessageManager_SendPreSerializedMessage_TisClientConnectedMessage_tADCD93468AB0DC7530616900F85D58E57EC3C46E_m9FA79875297ABB6040782E77971BC1AD1DCF445F_gshared (NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468* __this, FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* ___0_tmpSerializer, int32_t ___1_maxSize, ClientConnectedMessage_tADCD93468AB0DC7530616900F85D58E57EC3C46E* ___2_message, int32_t ___3_delivery, RuntimeObject** ___4_clientIds, int32_t ___5_messageVersionFilter, const RuntimeMethod* method) 
+{
+	if (!il2cpp_rgctx_is_initialized(method))
+	{
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2_TryGetValue_m59A3EFB659F69BA6896A334B18E420F36BCBAE51_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2_get_Item_m049101FC74A1975FDEA57CF7D1B0D5BA7B50A2D2_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&Dictionary_2_get_Item_mE16FCDF42A9E03B435AE822EB4014DEF0DA1C08B_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&FastBufferWriter_GetWriteSize_TisNetworkMessageHeader_tFFC66D680C8854B3110927656A5175C93575A673_mB6F27E16E99930F3403DE510BC44F224E2756965_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&HashSet_1_Contains_mBF5C5703CB05DC938E7B68F670E5BE303E16A957_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&IReadOnlyCollection_1_t02F24BFA8317160B96EEE7839D43A61F5149E410_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&IReadOnlyList_1_t1A3980B817C9C841FC942102C2A423C1AAD15C8E_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1_get_Count_m1B5F03DAFC4DD93F2A6F3BF9CF99369C854107F4_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&List_1_get_Item_m2AC52F6154CCC350A2D161D9271DC7A4141292F9_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&NativeList_1_Add_m1C72AC3E69ABD8217C0D04F9921A1B47EDD2452D_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&NativeList_1_ElementAt_m4155BCEA9B1A22F02D64A2D0B8F564913E575344_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&NativeList_1_get_Length_mCC4E58287182D133ADDB3D60C97A0494B70F01E3_RuntimeMethod_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468_il2cpp_TypeInfo_var);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral2E91C32DDF49D7A1970FE11929760D0F7CF3A278);
+		il2cpp_codegen_initialize_runtime_metadata((uintptr_t*)&_stringLiteral968EEBAE113F59BCA89353695043527A8D8C668D);
+		il2cpp_rgctx_method_init(method);
+	}
+	FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC V_0;
+	memset((&V_0), 0, sizeof(V_0));
+	NetworkMessageHeader_tFFC66D680C8854B3110927656A5175C93575A673 V_1;
+	memset((&V_1), 0, sizeof(V_1));
+	NetworkMessageHeader_tFFC66D680C8854B3110927656A5175C93575A673 V_2;
+	memset((&V_2), 0, sizeof(V_2));
+	FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC V_3;
+	memset((&V_3), 0, sizeof(V_3));
+	int32_t V_4 = 0;
+	uint64_t V_5 = 0;
+	int32_t V_6 = 0;
+	NativeList_1_tC29926B3C823A1626820FC87B385FFE47BA188DB V_7;
+	memset((&V_7), 0, sizeof(V_7));
+	SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* V_8 = NULL;
+	int32_t V_9 = 0;
+	int32_t V_10 = 0;
+	int32_t V_11 = 0;
+	SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7 V_12;
+	memset((&V_12), 0, sizeof(V_12));
+	SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* V_13 = NULL;
+	int32_t V_14 = 0;
+	int32_t V_15 = 0;
+	{
+		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:641>
+		il2cpp_codegen_runtime_class_init_inline(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC_il2cpp_TypeInfo_var);
+		int32_t L_0;
+		L_0 = FastBufferWriter_GetWriteSize_TisNetworkMessageHeader_tFFC66D680C8854B3110927656A5175C93575A673_mB6F27E16E99930F3403DE510BC44F224E2756965(FastBufferWriter_GetWriteSize_TisNetworkMessageHeader_tFFC66D680C8854B3110927656A5175C93575A673_mB6F27E16E99930F3403DE510BC44F224E2756965_RuntimeMethod_var);
+		FastBufferWriter__ctor_mC30559B2929B00FB14A14546F92426A19AB7FFC4((&V_0), L_0, (int32_t)2, (-1), NULL);
+	}
+	{
+		auto __finallyBlock = il2cpp::utils::Finally([&]
+		{
+
+FINALLY_039f:
+			{
+				il2cpp_codegen_runtime_class_init_inline(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC_il2cpp_TypeInfo_var);
+				FastBufferWriter_Dispose_mD37E84164B321672C9DD7FED218D6802360660FE((&V_0), NULL);
+				return;
+			}
+		});
+		try
+		{
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:643>
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:644>
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:645>
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:646>
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:647>
+				il2cpp_codegen_initobj((&V_2), sizeof(NetworkMessageHeader_tFFC66D680C8854B3110927656A5175C93575A673));
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_1 = ___0_tmpSerializer;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC L_2 = (*(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)L_1);
+				V_3 = L_2;
+				il2cpp_codegen_runtime_class_init_inline(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC_il2cpp_TypeInfo_var);
+				int32_t L_3;
+				L_3 = FastBufferWriter_get_Length_m7266B7D8C1D5C7C6876FBC287C06655EB9593396_inline((&V_3), NULL);
+				(&V_2)->___MessageSize = (uint32_t)L_3;
+				Dictionary_2_t4E1AC3103633DA3C82B1A7A6930ED5ECA825CC05* L_4 = __this->___m_MessageTypes;
+				RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B L_5 = { reinterpret_cast<intptr_t> (il2cpp_rgctx_type(method->rgctx_data, 0)) };
+				il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
+				Type_t* L_6;
+				L_6 = Type_GetTypeFromHandle_m6062B81682F79A4D6DF2640692EE6D9987858C57(L_5, NULL);
+				NullCheck(L_4);
+				uint32_t L_7;
+				L_7 = Dictionary_2_get_Item_m049101FC74A1975FDEA57CF7D1B0D5BA7B50A2D2(L_4, L_6, Dictionary_2_get_Item_m049101FC74A1975FDEA57CF7D1B0D5BA7B50A2D2_RuntimeMethod_var);
+				(&V_2)->___MessageType = L_7;
+				NetworkMessageHeader_tFFC66D680C8854B3110927656A5175C93575A673 L_8 = V_2;
+				V_1 = L_8;
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:648>
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC L_9 = V_0;
+				NetworkMessageHeader_tFFC66D680C8854B3110927656A5175C93575A673 L_10 = V_1;
+				uint32_t L_11 = L_10.___MessageType;
+				BytePacker_WriteValueBitPacked_m50033FEA83560CA7AF9668B3C7352E013D518F11(L_9, L_11, NULL);
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:649>
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC L_12 = V_0;
+				NetworkMessageHeader_tFFC66D680C8854B3110927656A5175C93575A673 L_13 = V_1;
+				uint32_t L_14 = L_13.___MessageSize;
+				BytePacker_WriteValueBitPacked_m50033FEA83560CA7AF9668B3C7352E013D518F11(L_12, L_14, NULL);
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:651>
+				V_4 = 0;
+				goto IL_0376_1;
+			}
+
+IL_0069_1:
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:653>
+				HashSet_1_t69B3138379C60F0B2D0D83966D6FF40BF4B4256C* L_15 = __this->___m_DisconnectedClients;
+				RuntimeObject** L_16 = ___4_clientIds;
+				RuntimeObject* L_17 = *((RuntimeObject**)L_16);
+				int32_t L_18 = V_4;
+				NullCheck(L_17);
+				uint64_t L_19;
+				L_19 = InterfaceFuncInvoker1< uint64_t, int32_t >::Invoke(0, IReadOnlyList_1_t1A3980B817C9C841FC942102C2A423C1AAD15C8E_il2cpp_TypeInfo_var, L_17, L_18);
+				NullCheck(L_15);
+				bool L_20;
+				L_20 = HashSet_1_Contains_mBF5C5703CB05DC938E7B68F670E5BE303E16A957(L_15, L_19, HashSet_1_Contains_mBF5C5703CB05DC938E7B68F670E5BE303E16A957_RuntimeMethod_var);
+				if (L_20)
+				{
+					goto IL_0370_1;
+				}
+			}
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:660>
+				RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B L_21 = { reinterpret_cast<intptr_t> (il2cpp_rgctx_type(method->rgctx_data, 0)) };
+				il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
+				Type_t* L_22;
+				L_22 = Type_GetTypeFromHandle_m6062B81682F79A4D6DF2640692EE6D9987858C57(L_21, NULL);
+				il2cpp_codegen_runtime_class_init_inline(NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468_il2cpp_TypeInfo_var);
+				Type_t* L_23 = ((NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468_StaticFields*)il2cpp_codegen_static_fields_for(NetworkMessageManager_t3AC5DCD467E3287780F83E2B4A37CC5DCB40C468_il2cpp_TypeInfo_var))->___s_ConnectionRequestType;
+				bool L_24;
+				L_24 = Type_op_Inequality_m83209C7BB3C05DFBEA3B6199B0BEFE8037301172(L_22, L_23, NULL);
+				if (!L_24)
+				{
+					goto IL_00c7_1;
+				}
+			}
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:662>
+				RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B L_25 = { reinterpret_cast<intptr_t> (il2cpp_rgctx_type(method->rgctx_data, 0)) };
+				il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
+				Type_t* L_26;
+				L_26 = Type_GetTypeFromHandle_m6062B81682F79A4D6DF2640692EE6D9987858C57(L_25, NULL);
+				RuntimeObject** L_27 = ___4_clientIds;
+				RuntimeObject* L_28 = *((RuntimeObject**)L_27);
+				int32_t L_29 = V_4;
+				NullCheck(L_28);
+				uint64_t L_30;
+				L_30 = InterfaceFuncInvoker1< uint64_t, int32_t >::Invoke(0, IReadOnlyList_1_t1A3980B817C9C841FC942102C2A423C1AAD15C8E_il2cpp_TypeInfo_var, L_28, L_29);
+				int32_t L_31;
+				L_31 = NetworkMessageManager_GetMessageVersion_mDCA4F408418C719862CE92414D88B3B126DB980A_inline(__this, L_26, L_30, (bool)0, NULL);
+				V_9 = L_31;
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:663>
+				int32_t L_32 = V_9;
+				if ((((int32_t)L_32) < ((int32_t)0)))
+				{
+					goto IL_0370_1;
+				}
+			}
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:669>
+				int32_t L_33 = V_9;
+				int32_t L_34 = ___5_messageVersionFilter;
+				if ((!(((uint32_t)L_33) == ((uint32_t)L_34))))
+				{
+					goto IL_0370_1;
+				}
+			}
+
+IL_00c7_1:
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:675>
+				RuntimeObject** L_35 = ___4_clientIds;
+				RuntimeObject* L_36 = *((RuntimeObject**)L_35);
+				int32_t L_37 = V_4;
+				NullCheck(L_36);
+				uint64_t L_38;
+				L_38 = InterfaceFuncInvoker1< uint64_t, int32_t >::Invoke(0, IReadOnlyList_1_t1A3980B817C9C841FC942102C2A423C1AAD15C8E_il2cpp_TypeInfo_var, L_36, L_37);
+				V_5 = L_38;
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:677>
+				uint64_t L_39 = V_5;
+				RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B L_40 = { reinterpret_cast<intptr_t> (il2cpp_rgctx_type(method->rgctx_data, 0)) };
+				il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
+				Type_t* L_41;
+				L_41 = Type_GetTypeFromHandle_m6062B81682F79A4D6DF2640692EE6D9987858C57(L_40, NULL);
+				int32_t L_42 = ___3_delivery;
+				bool L_43;
+				L_43 = NetworkMessageManager_CanSend_m53198ECCCFC9A51307BCD49E76BF53049D06B711(__this, L_39, L_41, L_42, NULL);
+				if (!L_43)
+				{
+					goto IL_0370_1;
+				}
+			}
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:682>
+				int32_t L_44 = __this->___NonFragmentedMessageMaxSize;
+				V_6 = L_44;
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:683>
+				int32_t L_45 = ___3_delivery;
+				if ((((int32_t)L_45) == ((int32_t)4)))
+				{
+					goto IL_014c_1;
+				}
+			}
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:685>
+				Dictionary_2_tAC84F565B305F33E7066B98F6CD6CC5A96A1416A* L_46 = __this->___PeerMTUSizes;
+				uint64_t L_47 = V_5;
+				NullCheck(L_46);
+				bool L_48;
+				L_48 = Dictionary_2_TryGetValue_m59A3EFB659F69BA6896A334B18E420F36BCBAE51(L_46, L_47, (&V_10), Dictionary_2_TryGetValue_m59A3EFB659F69BA6896A334B18E420F36BCBAE51_RuntimeMethod_var);
+				if (!L_48)
+				{
+					goto IL_010e_1;
+				}
+			}
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:687>
+				int32_t L_49 = V_10;
+				___1_maxSize = L_49;
+			}
+
+IL_010e_1:
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:689>
+				int32_t L_50 = ___1_maxSize;
+				V_6 = L_50;
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:690>
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_51 = ___0_tmpSerializer;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC L_52 = (*(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)L_51);
+				V_3 = L_52;
+				il2cpp_codegen_runtime_class_init_inline(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC_il2cpp_TypeInfo_var);
+				int32_t L_53;
+				L_53 = FastBufferWriter_get_Position_m87642B5268B41B7D15D4E628DF93A5B5776A4B05_inline((&V_3), NULL);
+				int32_t L_54 = ___1_maxSize;
+				if ((((int32_t)L_53) < ((int32_t)L_54)))
+				{
+					goto IL_014c_1;
+				}
+			}
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:692>
+				uint64_t L_55 = V_5;
+				uint64_t L_56 = L_55;
+				RuntimeObject* L_57 = Box(il2cpp_defaults.uint64_class, &L_56);
+				RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B L_58 = { reinterpret_cast<intptr_t> (il2cpp_rgctx_type(method->rgctx_data, 0)) };
+				il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
+				Type_t* L_59;
+				L_59 = Type_GetTypeFromHandle_m6062B81682F79A4D6DF2640692EE6D9987858C57(L_58, NULL);
+				NullCheck(L_59);
+				String_t* L_60;
+				L_60 = VirtualFuncInvoker0< String_t* >::Invoke(26, L_59);
+				String_t* L_61;
+				L_61 = String_Format_mFB7DA489BD99F4670881FF50EC017BFB0A5C0987(_stringLiteral2E91C32DDF49D7A1970FE11929760D0F7CF3A278, L_57, (RuntimeObject*)L_60, NULL);
+				il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+				Debug_LogError_mB00B2B4468EF3CAF041B038D840820FB84C924B2((RuntimeObject*)L_61, NULL);
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:693>
+				goto IL_0370_1;
+			}
+
+IL_014c_1:
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:697>
+				V_11 = 0;
+				goto IL_016e_1;
+			}
+
+IL_0151_1:
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:699>
+				List_1_tC1AC8A4D1ABE47FA75A90A3AB06B2FC6FACB9810* L_62 = __this->___m_Hooks;
+				int32_t L_63 = V_11;
+				NullCheck(L_62);
+				RuntimeObject* L_64;
+				L_64 = List_1_get_Item_m2AC52F6154CCC350A2D161D9271DC7A4141292F9(L_62, L_63, List_1_get_Item_m2AC52F6154CCC350A2D161D9271DC7A4141292F9_RuntimeMethod_var);
+				uint64_t L_65 = V_5;
+				ClientConnectedMessage_tADCD93468AB0DC7530616900F85D58E57EC3C46E* L_66 = ___2_message;
+				int32_t L_67 = ___3_delivery;
+				NullCheck(L_64);
+				GenericInterfaceActionInvoker3< uint64_t, ClientConnectedMessage_tADCD93468AB0DC7530616900F85D58E57EC3C46E*, int32_t >::Invoke(il2cpp_rgctx_method(method->rgctx_data, 2), L_64, L_65, L_66, L_67);
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:697>
+				int32_t L_68 = V_11;
+				V_11 = ((int32_t)il2cpp_codegen_add(L_68, 1));
+			}
+
+IL_016e_1:
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:697>
+				int32_t L_69 = V_11;
+				List_1_tC1AC8A4D1ABE47FA75A90A3AB06B2FC6FACB9810* L_70 = __this->___m_Hooks;
+				NullCheck(L_70);
+				int32_t L_71;
+				L_71 = List_1_get_Count_m1B5F03DAFC4DD93F2A6F3BF9CF99369C854107F4_inline(L_70, List_1_get_Count_m1B5F03DAFC4DD93F2A6F3BF9CF99369C854107F4_RuntimeMethod_var);
+				if ((((int32_t)L_69) < ((int32_t)L_71)))
+				{
+					goto IL_0151_1;
+				}
+			}
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:702>
+				Dictionary_2_tF94A082BC0A1596467346D509355D345EFF5FA68* L_72 = __this->___m_SendQueues;
+				uint64_t L_73 = V_5;
+				NullCheck(L_72);
+				NativeList_1_tC29926B3C823A1626820FC87B385FFE47BA188DB L_74;
+				L_74 = Dictionary_2_get_Item_mE16FCDF42A9E03B435AE822EB4014DEF0DA1C08B(L_72, L_73, Dictionary_2_get_Item_mE16FCDF42A9E03B435AE822EB4014DEF0DA1C08B_RuntimeMethod_var);
+				V_7 = L_74;
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:703>
+				int32_t L_75;
+				L_75 = NativeList_1_get_Length_mCC4E58287182D133ADDB3D60C97A0494B70F01E3_inline((&V_7), NativeList_1_get_Length_mCC4E58287182D133ADDB3D60C97A0494B70F01E3_RuntimeMethod_var);
+				if (L_75)
+				{
+					goto IL_01c8_1;
+				}
+			}
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:705>
+				int32_t L_76 = ___3_delivery;
+				int32_t L_77 = V_6;
+				int32_t L_78 = ___1_maxSize;
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7 L_79;
+				memset((&L_79), 0, sizeof(L_79));
+				SendQueueItem__ctor_mC2BDC24F3964A0F484005683AB7316DC1272FD56((&L_79), L_76, L_77, (int32_t)3, L_78, NULL);
+				V_12 = L_79;
+				NativeList_1_Add_m1C72AC3E69ABD8217C0D04F9921A1B47EDD2452D((&V_7), (&V_12), NativeList_1_Add_m1C72AC3E69ABD8217C0D04F9921A1B47EDD2452D_RuntimeMethod_var);
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:706>
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* L_80;
+				L_80 = NativeList_1_ElementAt_m4155BCEA9B1A22F02D64A2D0B8F564913E575344((&V_7), 0, NativeList_1_ElementAt_m4155BCEA9B1A22F02D64A2D0B8F564913E575344_RuntimeMethod_var);
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_81 = (FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)(&L_80->___Writer);
+				uint32_t L_82 = sizeof(NetworkBatchHeader_t17FCE9C128DF7DF17874253A431A98B2DB19C6AA);
+				il2cpp_codegen_runtime_class_init_inline(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC_il2cpp_TypeInfo_var);
+				FastBufferWriter_Seek_mB69BB80C6A754FCD31EEC11BF09B1E354AADA64E_inline(L_81, (int32_t)L_82, NULL);
+				goto IL_024c_1;
+			}
+
+IL_01c8_1:
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:710>
+				int32_t L_83;
+				L_83 = NativeList_1_get_Length_mCC4E58287182D133ADDB3D60C97A0494B70F01E3_inline((&V_7), NativeList_1_get_Length_mCC4E58287182D133ADDB3D60C97A0494B70F01E3_RuntimeMethod_var);
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* L_84;
+				L_84 = NativeList_1_ElementAt_m4155BCEA9B1A22F02D64A2D0B8F564913E575344((&V_7), ((int32_t)il2cpp_codegen_subtract(L_83, 1)), NativeList_1_ElementAt_m4155BCEA9B1A22F02D64A2D0B8F564913E575344_RuntimeMethod_var);
+				V_13 = L_84;
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:711>
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* L_85 = V_13;
+				int32_t L_86 = L_85->___NetworkDelivery;
+				int32_t L_87 = ___3_delivery;
+				if ((!(((uint32_t)L_86) == ((uint32_t)L_87))))
+				{
+					goto IL_0216_1;
+				}
+			}
+			{
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* L_88 = V_13;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_89 = (FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)(&L_88->___Writer);
+				il2cpp_codegen_runtime_class_init_inline(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC_il2cpp_TypeInfo_var);
+				int32_t L_90;
+				L_90 = FastBufferWriter_get_MaxCapacity_m9AAC1191EA17DE81E30AD51CA9B1B6B51B75FB09_inline(L_89, NULL);
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* L_91 = V_13;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_92 = (FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)(&L_91->___Writer);
+				int32_t L_93;
+				L_93 = FastBufferWriter_get_Position_m87642B5268B41B7D15D4E628DF93A5B5776A4B05_inline(L_92, NULL);
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_94 = ___0_tmpSerializer;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC L_95 = (*(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)L_94);
+				V_3 = L_95;
+				int32_t L_96;
+				L_96 = FastBufferWriter_get_Length_m7266B7D8C1D5C7C6876FBC287C06655EB9593396_inline((&V_3), NULL);
+				int32_t L_97;
+				L_97 = FastBufferWriter_get_Length_m7266B7D8C1D5C7C6876FBC287C06655EB9593396_inline((&V_0), NULL);
+				if ((((int32_t)((int32_t)il2cpp_codegen_subtract(L_90, L_93))) >= ((int32_t)((int32_t)il2cpp_codegen_add(L_96, L_97)))))
+				{
+					goto IL_024c_1;
+				}
+			}
+
+IL_0216_1:
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:713>
+				int32_t L_98 = ___3_delivery;
+				int32_t L_99 = V_6;
+				int32_t L_100 = ___1_maxSize;
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7 L_101;
+				memset((&L_101), 0, sizeof(L_101));
+				SendQueueItem__ctor_mC2BDC24F3964A0F484005683AB7316DC1272FD56((&L_101), L_98, L_99, (int32_t)3, L_100, NULL);
+				V_12 = L_101;
+				NativeList_1_Add_m1C72AC3E69ABD8217C0D04F9921A1B47EDD2452D((&V_7), (&V_12), NativeList_1_Add_m1C72AC3E69ABD8217C0D04F9921A1B47EDD2452D_RuntimeMethod_var);
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:714>
+				int32_t L_102;
+				L_102 = NativeList_1_get_Length_mCC4E58287182D133ADDB3D60C97A0494B70F01E3_inline((&V_7), NativeList_1_get_Length_mCC4E58287182D133ADDB3D60C97A0494B70F01E3_RuntimeMethod_var);
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* L_103;
+				L_103 = NativeList_1_ElementAt_m4155BCEA9B1A22F02D64A2D0B8F564913E575344((&V_7), ((int32_t)il2cpp_codegen_subtract(L_102, 1)), NativeList_1_ElementAt_m4155BCEA9B1A22F02D64A2D0B8F564913E575344_RuntimeMethod_var);
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_104 = (FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)(&L_103->___Writer);
+				uint32_t L_105 = sizeof(NetworkBatchHeader_t17FCE9C128DF7DF17874253A431A98B2DB19C6AA);
+				il2cpp_codegen_runtime_class_init_inline(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC_il2cpp_TypeInfo_var);
+				FastBufferWriter_Seek_mB69BB80C6A754FCD31EEC11BF09B1E354AADA64E_inline(L_104, (int32_t)L_105, NULL);
+			}
+
+IL_024c_1:
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:718>
+				int32_t L_106;
+				L_106 = NativeList_1_get_Length_mCC4E58287182D133ADDB3D60C97A0494B70F01E3_inline((&V_7), NativeList_1_get_Length_mCC4E58287182D133ADDB3D60C97A0494B70F01E3_RuntimeMethod_var);
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* L_107;
+				L_107 = NativeList_1_ElementAt_m4155BCEA9B1A22F02D64A2D0B8F564913E575344((&V_7), ((int32_t)il2cpp_codegen_subtract(L_106, 1)), NativeList_1_ElementAt_m4155BCEA9B1A22F02D64A2D0B8F564913E575344_RuntimeMethod_var);
+				V_8 = L_107;
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:719>
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* L_108 = V_8;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_109 = (FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)(&L_108->___Writer);
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_110 = ___0_tmpSerializer;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC L_111 = (*(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)L_110);
+				V_3 = L_111;
+				il2cpp_codegen_runtime_class_init_inline(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC_il2cpp_TypeInfo_var);
+				int32_t L_112;
+				L_112 = FastBufferWriter_get_Length_m7266B7D8C1D5C7C6876FBC287C06655EB9593396_inline((&V_3), NULL);
+				int32_t L_113;
+				L_113 = FastBufferWriter_get_Length_m7266B7D8C1D5C7C6876FBC287C06655EB9593396_inline((&V_0), NULL);
+				bool L_114;
+				L_114 = FastBufferWriter_TryBeginWrite_m16FA0A52579A7C6C5E59171D26EA327CDEBFF459_inline(L_109, ((int32_t)il2cpp_codegen_add(L_112, L_113)), NULL);
+				if (L_114)
+				{
+					goto IL_02d3_1;
+				}
+			}
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:721>
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_115 = ___0_tmpSerializer;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC L_116 = (*(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)L_115);
+				V_3 = L_116;
+				il2cpp_codegen_runtime_class_init_inline(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC_il2cpp_TypeInfo_var);
+				int32_t L_117;
+				L_117 = FastBufferWriter_get_Length_m7266B7D8C1D5C7C6876FBC287C06655EB9593396_inline((&V_3), NULL);
+				int32_t L_118;
+				L_118 = FastBufferWriter_get_Length_m7266B7D8C1D5C7C6876FBC287C06655EB9593396_inline((&V_0), NULL);
+				int32_t L_119 = ((int32_t)il2cpp_codegen_add(L_117, L_118));
+				RuntimeObject* L_120 = Box(il2cpp_defaults.int32_class, &L_119);
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* L_121 = V_8;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_122 = (FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)(&L_121->___Writer);
+				int32_t L_123;
+				L_123 = FastBufferWriter_get_Position_m87642B5268B41B7D15D4E628DF93A5B5776A4B05_inline(L_122, NULL);
+				int32_t L_124 = L_123;
+				RuntimeObject* L_125 = Box(il2cpp_defaults.int32_class, &L_124);
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* L_126 = V_8;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_127 = (FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)(&L_126->___Writer);
+				int32_t L_128;
+				L_128 = FastBufferWriter_get_Capacity_mD964D1DBD191F782D6808ABB619A8BAD2B9B4B2D_inline(L_127, NULL);
+				int32_t L_129 = L_128;
+				RuntimeObject* L_130 = Box(il2cpp_defaults.int32_class, &L_129);
+				String_t* L_131;
+				L_131 = String_Format_mA0534D6E2AE4D67A6BD8D45B3321323930EB930C(_stringLiteral968EEBAE113F59BCA89353695043527A8D8C668D, L_120, L_125, L_130, NULL);
+				il2cpp_codegen_runtime_class_init_inline(Debug_t8394C7EEAECA3689C2C9B9DE9C7166D73596276F_il2cpp_TypeInfo_var);
+				Debug_LogError_mB00B2B4468EF3CAF041B038D840820FB84C924B2((RuntimeObject*)L_131, NULL);
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:722>
+				goto IL_0370_1;
+			}
+
+IL_02d3_1:
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:725>
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* L_132 = V_8;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_133 = (FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)(&L_132->___Writer);
+				il2cpp_codegen_runtime_class_init_inline(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC_il2cpp_TypeInfo_var);
+				uint8_t* L_134;
+				L_134 = FastBufferWriter_GetUnsafePtr_m2403FBA11BD6F554625287D720B65B45A0F6DA6A_inline((&V_0), NULL);
+				int32_t L_135;
+				L_135 = FastBufferWriter_get_Length_m7266B7D8C1D5C7C6876FBC287C06655EB9593396_inline((&V_0), NULL);
+				FastBufferWriter_WriteBytes_m1715C899E1CBB7C7B98605F0D6C210B7D046379F_inline(L_133, L_134, L_135, 0, NULL);
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:726>
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* L_136 = V_8;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_137 = (FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)(&L_136->___Writer);
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_138 = ___0_tmpSerializer;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC L_139 = (*(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)L_138);
+				V_3 = L_139;
+				uint8_t* L_140;
+				L_140 = FastBufferWriter_GetUnsafePtr_m2403FBA11BD6F554625287D720B65B45A0F6DA6A_inline((&V_3), NULL);
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_141 = ___0_tmpSerializer;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC L_142 = (*(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)L_141);
+				V_3 = L_142;
+				int32_t L_143;
+				L_143 = FastBufferWriter_get_Length_m7266B7D8C1D5C7C6876FBC287C06655EB9593396_inline((&V_3), NULL);
+				FastBufferWriter_WriteBytes_m1715C899E1CBB7C7B98605F0D6C210B7D046379F_inline(L_137, L_140, L_143, 0, NULL);
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:727>
+				SendQueueItem_t028997B9499F98F8FBFDDCA6245A3CCE69A37CB7* L_144 = V_8;
+				NetworkBatchHeader_t17FCE9C128DF7DF17874253A431A98B2DB19C6AA* L_145 = (NetworkBatchHeader_t17FCE9C128DF7DF17874253A431A98B2DB19C6AA*)(&L_144->___BatchHeader);
+				uint16_t* L_146 = (uint16_t*)(&L_145->___BatchCount);
+				uint16_t* L_147 = L_146;
+				int32_t L_148 = *((uint16_t*)L_147);
+				*((int16_t*)L_147) = (int16_t)((int32_t)(uint16_t)((int32_t)il2cpp_codegen_add(L_148, 1)));
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:728>
+				V_14 = 0;
+				goto IL_0361_1;
+			}
+
+IL_032e_1:
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:730>
+				List_1_tC1AC8A4D1ABE47FA75A90A3AB06B2FC6FACB9810* L_149 = __this->___m_Hooks;
+				int32_t L_150 = V_14;
+				NullCheck(L_149);
+				RuntimeObject* L_151;
+				L_151 = List_1_get_Item_m2AC52F6154CCC350A2D161D9271DC7A4141292F9(L_149, L_150, List_1_get_Item_m2AC52F6154CCC350A2D161D9271DC7A4141292F9_RuntimeMethod_var);
+				uint64_t L_152 = V_5;
+				ClientConnectedMessage_tADCD93468AB0DC7530616900F85D58E57EC3C46E* L_153 = ___2_message;
+				int32_t L_154 = ___3_delivery;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_155 = ___0_tmpSerializer;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC L_156 = (*(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)L_155);
+				V_3 = L_156;
+				il2cpp_codegen_runtime_class_init_inline(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC_il2cpp_TypeInfo_var);
+				int32_t L_157;
+				L_157 = FastBufferWriter_get_Length_m7266B7D8C1D5C7C6876FBC287C06655EB9593396_inline((&V_3), NULL);
+				int32_t L_158;
+				L_158 = FastBufferWriter_get_Length_m7266B7D8C1D5C7C6876FBC287C06655EB9593396_inline((&V_0), NULL);
+				NullCheck(L_151);
+				GenericInterfaceActionInvoker4< uint64_t, ClientConnectedMessage_tADCD93468AB0DC7530616900F85D58E57EC3C46E*, int32_t, int32_t >::Invoke(il2cpp_rgctx_method(method->rgctx_data, 3), L_151, L_152, L_153, L_154, ((int32_t)il2cpp_codegen_add(L_157, L_158)));
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:728>
+				int32_t L_159 = V_14;
+				V_14 = ((int32_t)il2cpp_codegen_add(L_159, 1));
+			}
+
+IL_0361_1:
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:728>
+				int32_t L_160 = V_14;
+				List_1_tC1AC8A4D1ABE47FA75A90A3AB06B2FC6FACB9810* L_161 = __this->___m_Hooks;
+				NullCheck(L_161);
+				int32_t L_162;
+				L_162 = List_1_get_Count_m1B5F03DAFC4DD93F2A6F3BF9CF99369C854107F4_inline(L_161, List_1_get_Count_m1B5F03DAFC4DD93F2A6F3BF9CF99369C854107F4_RuntimeMethod_var);
+				if ((((int32_t)L_160) < ((int32_t)L_162)))
+				{
+					goto IL_032e_1;
+				}
+			}
+
+IL_0370_1:
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:651>
+				int32_t L_163 = V_4;
+				V_4 = ((int32_t)il2cpp_codegen_add(L_163, 1));
+			}
+
+IL_0376_1:
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:651>
+				int32_t L_164 = V_4;
+				RuntimeObject** L_165 = ___4_clientIds;
+				RuntimeObject* L_166 = *((RuntimeObject**)L_165);
+				NullCheck((RuntimeObject*)L_166);
+				int32_t L_167;
+				L_167 = InterfaceFuncInvoker0< int32_t >::Invoke(0, IReadOnlyCollection_1_t02F24BFA8317160B96EEE7839D43A61F5149E410_il2cpp_TypeInfo_var, (RuntimeObject*)L_166);
+				if ((((int32_t)L_164) < ((int32_t)L_167)))
+				{
+					goto IL_0069_1;
+				}
+			}
+			{
+				//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:734>
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC* L_168 = ___0_tmpSerializer;
+				FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC L_169 = (*(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC*)L_168);
+				V_3 = L_169;
+				il2cpp_codegen_runtime_class_init_inline(FastBufferWriter_tE6AFE9436BD125AF309056A81B70F95625FB96EC_il2cpp_TypeInfo_var);
+				int32_t L_170;
+				L_170 = FastBufferWriter_get_Length_m7266B7D8C1D5C7C6876FBC287C06655EB9593396_inline((&V_3), NULL);
+				int32_t L_171;
+				L_171 = FastBufferWriter_get_Length_m7266B7D8C1D5C7C6876FBC287C06655EB9593396_inline((&V_0), NULL);
+				V_15 = ((int32_t)il2cpp_codegen_add(L_170, L_171));
+				goto IL_03ad;
+			}
+		}
+		catch(Il2CppExceptionWrapper& e)
+		{
+			__finallyBlock.StoreException(e.ex);
+		}
+	}
+
+IL_03ad:
+	{
+		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/Messaging/NetworkMessageManager.cs:735>
+		int32_t L_172 = V_15;
+		return L_172;
+	}
+}
 // Method Definition Index: 89595
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR bool NetworkClient_get_IsServer_m488CD548E37B2D542415841AFEE32E6BD877F931_inline (NetworkClient_t4EB5B562D3C8D21DDD5749455CE80E5B12571F64* __this, const RuntimeMethod* method) 
 {
@@ -27088,7 +27303,7 @@ IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR RuntimeObject* NetworkHandler_get
 		return L_0;
 	}
 }
-// Method Definition Index: 133821
+// Method Definition Index: 133929
 IL2CPP_MANAGED_FORCE_INLINE IL2CPP_METHOD_ATTR RuntimeObject* NetworkHandler_get_Configuration_m50F5CD18AB54068DDF841DBE0DADDADEF4F5707F_inline (NetworkHandler_t837B2329903C4E0294F6C64B2D6668FC3E9C89A1* __this, const RuntimeMethod* method) 
 {
 	{

@@ -3081,9 +3081,6 @@ struct NetworkPrefabInstanceHandlerWithData_1_t0DCEAD69F75543E49D734F13FD09F5ACA
 struct NetworkPrefabInstanceHandlerWithData_1_tD7E868B90A47E4E7FB5D35A01E28A6711DFCA8D7  : public RuntimeObject
 {
 };
-struct NetworkVariableEquality_1_t22C42061C10B8508DBCF34EF1DE0A65E92C1D969  : public RuntimeObject
-{
-};
 struct NetworkVariableEquality_1_tF171C715BB756FED2E35D38D913BCB2607CDE86A  : public RuntimeObject
 {
 };
@@ -14871,7 +14868,6 @@ inline void NativeParallelMultiHashMap_2_Initialize_TisIl2CppFullySharedGenericS
 }
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Type_t* Type_GetTypeFromHandle_m6062B81682F79A4D6DF2640692EE6D9987858C57 (RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B ___0_handle, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Type_op_Equality_m99930A0E44E420A685FABA60E60BA1CC5FA0EBDC (Type_t* ___0_left, Type_t* ___1_right, const RuntimeMethod* method) ;
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool Boolean_Equals_mC020D5EB2F64274CD623E8449E8777A70BEC6CC9 (bool* __this, bool ___0_obj, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool FixedString128Bytes_Equals_m3B91B177B21344B9CB879DFDAA00AB7E812AD5AB (FixedString128Bytes_tEBC488E0CC30C6D842951A4E6F09AC58677F1952* __this, FixedString128Bytes_tEBC488E0CC30C6D842951A4E6F09AC58677F1952 ___0_other, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t UnsafeUtility_MemCmp_mA0E0E1A93F715105E7B576F1603DCAB37717A5EF (void* ___0_ptr1, void* ___1_ptr2, int64_t ___2_size, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool NetcodeGameObjectsAnchor_Equals_m9F77184856C2E99D61D19CFB7CE6180D566E0C8F (NetcodeGameObjectsAnchor_tE0D5FB4C2F3F724250648EDAD073DE4AE06E74C4* __this, NetcodeGameObjectsAnchor_tE0D5FB4C2F3F724250648EDAD073DE4AE06E74C4 ___0_other, const RuntimeMethod* method) ;
@@ -17431,7 +17427,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void BufferSerializer_1_SerializeValuePreChec
 		return;
 	}
 }
-// Method Definition Index: 129975
+// Method Definition Index: 130392
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918* CachedComponentFilter_2_GetMatchingComponents_TisRuntimeObject_mD6A1DDDCB9019CD0B85322A89728C1E0AB8C8A25_gshared (CachedComponentFilter_2_t35C33D484A4C46960AF4D789823F40362A6C63C6* __this, const RuntimeMethod* method) 
 {
 	il2cpp_rgctx_method_init(method);
@@ -17587,7 +17583,7 @@ IL_009b:
 		return L_16;
 	}
 }
-// Method Definition Index: 129974
+// Method Definition Index: 130391
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CachedComponentFilter_2_StoreMatchingComponents_TisRuntimeObject_mFD49B6163B041CD06B2B7C260A0D1DC284A0A5CE_gshared (CachedComponentFilter_2_t35C33D484A4C46960AF4D789823F40362A6C63C6* __this, List_1_tA239CB83DE5615F348BB0507E45F490F4F7C9A8D* ___0_outputList, const RuntimeMethod* method) 
 {
 	il2cpp_rgctx_method_init(method);
@@ -26732,21 +26728,6 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool NetworkPrefabInstanceHandlerWithData_1_U
 	}
 }
 // Method Definition Index: 91974
-// Method Definition Index: 90803
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool NetworkVariableEquality_1_EqualityEquals_TisBoolean_t09A6377A54BE2F9E6985A8149F19234FD7DDFE22_m54FB67541AC3C4E5062ED097CEDD7F910ABBAF1D_gshared (bool* ___0_a, bool* ___1_b, const RuntimeMethod* method) 
-{
-	il2cpp_rgctx_method_init(method);
-	{
-		//<source_info:./Library/PackageCache/com.unity.netcode.gameobjects@beeaefb722f7/Runtime/NetworkVariable/Serialization/NetworkVariableEquality.cs:94>
-		bool* L_0 = ___0_a;
-		bool* L_1 = ___1_b;
-		bool L_2 = (*(bool*)L_1);
-		il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.boolean_class);
-		bool L_3;
-		L_3 = Boolean_Equals_mC020D5EB2F64274CD623E8449E8777A70BEC6CC9(L_0, L_2, il2cpp_rgctx_method(method->rgctx_data, 3));
-		return L_3;
-	}
-}
 // Method Definition Index: 90803
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool NetworkVariableEquality_1_EqualityEquals_TisFixedString128Bytes_tEBC488E0CC30C6D842951A4E6F09AC58677F1952_mF0B3DEA745490C142CF11797F35E8AC8C40E66C6_gshared (FixedString128Bytes_tEBC488E0CC30C6D842951A4E6F09AC58677F1952* ___0_a, FixedString128Bytes_tEBC488E0CC30C6D842951A4E6F09AC58677F1952* ___1_b, const RuntimeMethod* method) 
 {

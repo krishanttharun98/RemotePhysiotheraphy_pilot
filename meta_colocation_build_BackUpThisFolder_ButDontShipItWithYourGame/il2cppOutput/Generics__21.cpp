@@ -467,7 +467,6 @@ struct ChangeEvent_1_tC2FC5CE631274AD9CA4CC700ED43E22DE199F38E;
 struct ChangeEvent_1_t3828E5A5404BD57D6449235099FE9E547A1625FD;
 struct ChangeEvent_1_t9FF1AA69C73CC42102100F6FDD33BE0909B8A754;
 struct ChangeEvent_1_t2AB561588D5473562F0453192E6F736A0C01FDC3;
-struct CheckExceedsDirtinessThresholdDelegate_tFA641EB5F7105E607E65BAD33966BCE50E12E22F;
 struct CheckExceedsDirtinessThresholdDelegate_tD96302A2ED686347BF97B0E1C898EB11BFF31C57;
 struct CheckExceedsDirtinessThresholdDelegate_t89704EF17F710CABA0637639B6C27E0E31F3D76E;
 struct CheckExceedsDirtinessThresholdDelegate_t69C996D6E437C1490ACBB6476CF17390DF2AF61A;
@@ -11511,9 +11510,6 @@ struct CallbackWithState_1_t24CCEA6DBBAC9EF99B7E1B0520357FF36A3315A6
 {
 	InvertedCapture_2_tB60E0B53E02F92260D5BA9359439EDB87964857A ____data;
 	Action_2_t8013CDC6B2EE2DC8C448D0AC82B2F5EA85078607* ____delegate;
-};
-struct CheckExceedsDirtinessThresholdDelegate_tFA641EB5F7105E607E65BAD33966BCE50E12E22F  : public MulticastDelegate_t
-{
 };
 struct CheckExceedsDirtinessThresholdDelegate_tD96302A2ED686347BF97B0E1C898EB11BFF31C57  : public MulticastDelegate_t
 {
@@ -25946,7 +25942,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CachedAttributeGetter_1__cctor_m5C6EDCD6
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 129972
+// Method Definition Index: 130389
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CachedComponentFilter_2__ctor_mA476DA5E024D52334C4B46B86D0633809F73A335_gshared (CachedComponentFilter_2_t35C33D484A4C46960AF4D789823F40362A6C63C6* __this, RuntimeObject* ___0_componentRoot, int32_t ___1_cachedSearchType, bool ___2_includeDisabled, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -26183,7 +26179,7 @@ IL_010c:
 		return;
 	}
 }
-// Method Definition Index: 129973
+// Method Definition Index: 130390
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CachedComponentFilter_2__ctor_mE9E03996578601AB5784F9D8D83F1EF44FA91D67_gshared (CachedComponentFilter_2_t35C33D484A4C46960AF4D789823F40362A6C63C6* __this, ObjectU5BU5D_t8061030B0A12A55D5AD8652A20C922FE99450918* ___0_componentList, bool ___1_includeDisabled, const RuntimeMethod* method) 
 {
 	{
@@ -26226,7 +26222,7 @@ IL_000a:
 		return;
 	}
 }
-// Method Definition Index: 129976
+// Method Definition Index: 130393
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CachedComponentFilter_2_FilteredCopyToMaster_m6984E471ED721B30E895C5EE9CF1FB83901F1438_gshared (CachedComponentFilter_2_t35C33D484A4C46960AF4D789823F40362A6C63C6* __this, bool ___0_includeDisabled, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -26498,7 +26494,7 @@ IL_010c:
 		return;
 	}
 }
-// Method Definition Index: 129977
+// Method Definition Index: 130394
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CachedComponentFilter_2_FilteredCopyToMaster_m858F299604C1EDB92C93B702A2A3E2F375709882_gshared (CachedComponentFilter_2_t35C33D484A4C46960AF4D789823F40362A6C63C6* __this, bool ___0_includeDisabled, RuntimeObject* ___1_requiredRoot, const RuntimeMethod* method) 
 {
 	static bool s_Il2CppMethodInitialized;
@@ -26930,7 +26926,7 @@ IL_01f1:
 		return;
 	}
 }
-// Method Definition Index: 129978
+// Method Definition Index: 130395
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CachedComponentFilter_2_Dispose_m0A0845F8CF3A91288D451E9984D31E6A15C33739_gshared (CachedComponentFilter_2_t35C33D484A4C46960AF4D789823F40362A6C63C6* __this, bool ___0_disposing, const RuntimeMethod* method) 
 {
 	{
@@ -26977,7 +26973,7 @@ IL_001f:
 		return;
 	}
 }
-// Method Definition Index: 129979
+// Method Definition Index: 130396
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CachedComponentFilter_2_Dispose_mDE7E857EAD9CE336CE3F07853BE1B118DC7E1F8A_gshared (CachedComponentFilter_2_t35C33D484A4C46960AF4D789823F40362A6C63C6* __this, const RuntimeMethod* method) 
 {
 	{
@@ -26987,7 +26983,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CachedComponentFilter_2_Dispose_mDE7E857
 		return;
 	}
 }
-// Method Definition Index: 129980
+// Method Definition Index: 130397
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CachedComponentFilter_2__cctor_mDC90EB81FEF91CCF53E173368601DAD6460E0966_gshared (const RuntimeMethod* method) 
 {
 	{
@@ -38802,95 +38798,6 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void ChangedOrRemovedLobbyValue_1__cctor_m606
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-bool CheckExceedsDirtinessThresholdDelegate_Invoke_m48C550D4A42551D5BADBC90A212993DF4792DE0A_Multicast(CheckExceedsDirtinessThresholdDelegate_tFA641EB5F7105E607E65BAD33966BCE50E12E22F* __this, bool* ___0_previousValue, bool* ___1_newValue, const RuntimeMethod* method)
-{
-	il2cpp_array_size_t length = __this->___delegates->max_length;
-	Delegate_t** delegatesToInvoke = reinterpret_cast<Delegate_t**>(__this->___delegates->GetAddressAtUnchecked(0));
-	bool retVal = false;
-	for (il2cpp_array_size_t i = 0; i < length; i++)
-	{
-		CheckExceedsDirtinessThresholdDelegate_tFA641EB5F7105E607E65BAD33966BCE50E12E22F* currentDelegate = reinterpret_cast<CheckExceedsDirtinessThresholdDelegate_tFA641EB5F7105E607E65BAD33966BCE50E12E22F*>(delegatesToInvoke[i]);
-		typedef bool (*FunctionPointerType) (RuntimeObject*, bool*, bool*, const RuntimeMethod*);
-		retVal = ((FunctionPointerType)currentDelegate->___invoke_impl)((Il2CppObject*)currentDelegate->___method_code, ___0_previousValue, ___1_newValue, reinterpret_cast<RuntimeMethod*>(currentDelegate->___method));
-	}
-	return retVal;
-}
-bool CheckExceedsDirtinessThresholdDelegate_Invoke_m48C550D4A42551D5BADBC90A212993DF4792DE0A_OpenInst(CheckExceedsDirtinessThresholdDelegate_tFA641EB5F7105E607E65BAD33966BCE50E12E22F* __this, bool* ___0_previousValue, bool* ___1_newValue, const RuntimeMethod* method)
-{
-	NullCheck(___0_previousValue);
-	typedef bool (*FunctionPointerType) (bool*, bool*, const RuntimeMethod*);
-	return ((FunctionPointerType)__this->___method_ptr)(___0_previousValue, ___1_newValue, method);
-}
-bool CheckExceedsDirtinessThresholdDelegate_Invoke_m48C550D4A42551D5BADBC90A212993DF4792DE0A_OpenStatic(CheckExceedsDirtinessThresholdDelegate_tFA641EB5F7105E607E65BAD33966BCE50E12E22F* __this, bool* ___0_previousValue, bool* ___1_newValue, const RuntimeMethod* method)
-{
-	typedef bool (*FunctionPointerType) (bool*, bool*, const RuntimeMethod*);
-	return ((FunctionPointerType)__this->___method_ptr)(___0_previousValue, ___1_newValue, method);
-}
-// Method Definition Index: 90732
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CheckExceedsDirtinessThresholdDelegate__ctor_mC2F6E42E6DBBA73A7607B121A1DB29EBF99E112D_gshared (CheckExceedsDirtinessThresholdDelegate_tFA641EB5F7105E607E65BAD33966BCE50E12E22F* __this, RuntimeObject* ___0_object, intptr_t ___1_method, const RuntimeMethod* method) 
-{
-	__this->___method_ptr = (intptr_t)il2cpp_codegen_get_method_pointer((RuntimeMethod*)___1_method);
-	__this->___method = ___1_method;
-	__this->___m_target = ___0_object;
-	Il2CppCodeGenWriteBarrier((void**)(&__this->___m_target), (void*)___0_object);
-	int parameterCount = il2cpp_codegen_method_parameter_count((RuntimeMethod*)___1_method);
-	__this->___method_code = (intptr_t)__this;
-	if (MethodIsStatic((RuntimeMethod*)___1_method))
-	{
-		bool isOpen = parameterCount == 2;
-		if (isOpen)
-			__this->___invoke_impl = (intptr_t)&CheckExceedsDirtinessThresholdDelegate_Invoke_m48C550D4A42551D5BADBC90A212993DF4792DE0A_OpenStatic;
-		else
-			{
-				__this->___invoke_impl = __this->___method_ptr;
-				__this->___method_code = (intptr_t)__this->___m_target;
-			}
-	}
-	else
-	{
-		bool isOpen = parameterCount == 1;
-		if (isOpen)
-		{
-			__this->___invoke_impl = (intptr_t)&CheckExceedsDirtinessThresholdDelegate_Invoke_m48C550D4A42551D5BADBC90A212993DF4792DE0A_OpenInst;
-		}
-		else
-		{
-			if (___0_object == NULL)
-				il2cpp_codegen_raise_exception(il2cpp_codegen_get_argument_exception(NULL, "Delegate to an instance method cannot have null 'this'."), NULL);
-			__this->___invoke_impl = __this->___method_ptr;
-			__this->___method_code = (intptr_t)__this->___m_target;
-		}
-	}
-	__this->___extra_arg = (intptr_t)&CheckExceedsDirtinessThresholdDelegate_Invoke_m48C550D4A42551D5BADBC90A212993DF4792DE0A_Multicast;
-}
-// Method Definition Index: 90733
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool CheckExceedsDirtinessThresholdDelegate_Invoke_m48C550D4A42551D5BADBC90A212993DF4792DE0A_gshared (CheckExceedsDirtinessThresholdDelegate_tFA641EB5F7105E607E65BAD33966BCE50E12E22F* __this, bool* ___0_previousValue, bool* ___1_newValue, const RuntimeMethod* method) 
-{
-	typedef bool (*FunctionPointerType) (RuntimeObject*, bool*, bool*, const RuntimeMethod*);
-	return ((FunctionPointerType)__this->___invoke_impl)((Il2CppObject*)__this->___method_code, ___0_previousValue, ___1_newValue, reinterpret_cast<RuntimeMethod*>(__this->___method));
-}
-// Method Definition Index: 90734
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* CheckExceedsDirtinessThresholdDelegate_BeginInvoke_mD323A93749212E53F8ED4B704ACE253CB95C46DF_gshared (CheckExceedsDirtinessThresholdDelegate_tFA641EB5F7105E607E65BAD33966BCE50E12E22F* __this, bool* ___0_previousValue, bool* ___1_newValue, AsyncCallback_t7FEF460CBDCFB9C5FA2EF776984778B9A4145F4C* ___2_callback, RuntimeObject* ___3_object, const RuntimeMethod* method) 
-{
-	void *__d_args[3] = {0};
-	__d_args[0] = Box(il2cpp_defaults.boolean_class, &*___0_previousValue);
-	__d_args[1] = Box(il2cpp_defaults.boolean_class, &*___1_newValue);
-	return (RuntimeObject*)il2cpp_codegen_delegate_begin_invoke((RuntimeDelegate*)__this, __d_args, (RuntimeDelegate*)___2_callback, (RuntimeObject*)___3_object);
-}
-// Method Definition Index: 90735
-IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool CheckExceedsDirtinessThresholdDelegate_EndInvoke_mE34DA063072EA90BE3651DECD98403C16421A96F_gshared (CheckExceedsDirtinessThresholdDelegate_tFA641EB5F7105E607E65BAD33966BCE50E12E22F* __this, bool* ___0_previousValue, bool* ___1_newValue, RuntimeObject* ___2_result, const RuntimeMethod* method) 
-{
-	RuntimeObject *__result = il2cpp_codegen_delegate_end_invoke((Il2CppAsyncResult*) ___2_result, 0);
-	return *(bool*)UnBox ((RuntimeObject*)__result);
-}
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Winvalid-offsetof"
-#pragma clang diagnostic ignored "-Wunused-variable"
-#endif
 bool CheckExceedsDirtinessThresholdDelegate_Invoke_m5EACD7B555AB17E56F7344B780099729789D013F_Multicast(CheckExceedsDirtinessThresholdDelegate_tD96302A2ED686347BF97B0E1C898EB11BFF31C57* __this, FixedString128Bytes_tEBC488E0CC30C6D842951A4E6F09AC58677F1952* ___0_previousValue, FixedString128Bytes_tEBC488E0CC30C6D842951A4E6F09AC58677F1952* ___1_newValue, const RuntimeMethod* method)
 {
 	il2cpp_array_size_t length = __this->___delegates->max_length;
@@ -41139,7 +41046,7 @@ IL_002b:
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 129981
+// Method Definition Index: 130398
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR RuntimeObject* CollectionPool_2_GetCollection_mA0344CDCBCC8AFA3E748D4425A488F66EC7E148B_gshared (const RuntimeMethod* method) 
 {
 	{
@@ -41170,7 +41077,7 @@ IL_0013:
 		return L_4;
 	}
 }
-// Method Definition Index: 129982
+// Method Definition Index: 130399
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CollectionPool_2_RecycleCollection_mBB707C7C3F5C6A56A09AF1CCC0C6E43FC197F145_gshared (RuntimeObject* ___0_collection, const RuntimeMethod* method) 
 {
 	{
@@ -41187,7 +41094,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CollectionPool_2_RecycleCollection_mBB70
 		return;
 	}
 }
-// Method Definition Index: 129983
+// Method Definition Index: 130400
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CollectionPool_2__cctor_m0D611F968338851921883AAE905563E658C281B2_gshared (const RuntimeMethod* method) 
 {
 	{
@@ -41207,7 +41114,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CollectionPool_2__cctor_m0D611F968338851
 #pragma clang diagnostic ignored "-Winvalid-offsetof"
 #pragma clang diagnostic ignored "-Wunused-variable"
 #endif
-// Method Definition Index: 129981
+// Method Definition Index: 130398
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CollectionPool_2_GetCollection_m652B421F3AE6A320E4E9A398E5C628C1AE8D6F39_gshared (Il2CppFullySharedGenericAny* il2cppRetVal, const RuntimeMethod* method) 
 {
 	const uint32_t SizeOf_TCollection_t3FA83A93ECEA0B573846FDDE8363A05B096ED4C9 = il2cpp_codegen_sizeof(il2cpp_rgctx_data_no_init(InitializedTypeInfo(method->klass)->rgctx_data, 5));
@@ -41241,7 +41148,7 @@ IL_0013:
 		return;
 	}
 }
-// Method Definition Index: 129982
+// Method Definition Index: 130399
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CollectionPool_2_RecycleCollection_mBC2E754555CBCE319445B52A713B06C3D7C4787B_gshared (Il2CppFullySharedGenericAny ___0_collection, const RuntimeMethod* method) 
 {
 	void* L_0 = alloca(Il2CppFakeBoxBuffer::SizeNeededFor(il2cpp_rgctx_data(InitializedTypeInfo(method->klass)->rgctx_data, 5)));
@@ -41260,7 +41167,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CollectionPool_2_RecycleCollection_mBC2E
 		return;
 	}
 }
-// Method Definition Index: 129983
+// Method Definition Index: 130400
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void CollectionPool_2__cctor_m4F33BC70B16CF20FD98FEC704CD68DFCE8719F93_gshared (const RuntimeMethod* method) 
 {
 	{

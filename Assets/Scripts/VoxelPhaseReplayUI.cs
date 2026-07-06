@@ -6,6 +6,9 @@ public class VoxelPhaseReplayUI : MonoBehaviour
     [Header("VoxelGrid Reference")]
     public VoxelGridManager voxelGridManager;
 
+    [Header("Hemisphere Analytics (beside voxel grid)")]
+    public HemisphereAnalyticsStation hemisphereAnalytics;
+
     [Header("UI Buttons - 5 Phases")]
     public Button phase1Button;
     public Button phase2Button;
@@ -27,6 +30,9 @@ public class VoxelPhaseReplayUI : MonoBehaviour
                 return;
             }
         }
+
+        if (hemisphereAnalytics == null)
+            hemisphereAnalytics = FindObjectOfType<HemisphereAnalyticsStation>();
 
         // Assign button click listeners
         if (phase1Button != null)
@@ -53,6 +59,7 @@ public class VoxelPhaseReplayUI : MonoBehaviour
         if (currentDisplayingPhase == phase)
         {
             voxelGridManager.ClearGridDisplay();
+            if (hemisphereAnalytics != null) hemisphereAnalytics.ClearDisplay();
             currentDisplayingPhase = -1;
             Debug.Log($"{phaseName} cleared");
             return;
@@ -62,10 +69,12 @@ public class VoxelPhaseReplayUI : MonoBehaviour
         if (currentDisplayingPhase != -1)
         {
             voxelGridManager.ClearGridDisplay();
+            if (hemisphereAnalytics != null) hemisphereAnalytics.ClearDisplay();
         }
 
         // Display the new phase
         voxelGridManager.DisplayPhaseHistory(phase);
+        if (hemisphereAnalytics != null) hemisphereAnalytics.DisplayPhaseHistory(phase);
         currentDisplayingPhase = phase;
         Debug.Log($"Displaying {phaseName} data");
     }
