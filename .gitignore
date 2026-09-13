@@ -76,6 +76,8 @@ mono_crash.*
 *.unitypackage
 *.unitypackage.meta
 *.app
+*IL2CPP.symbols.zip
+*_BackUpThisFolder_ButDontShipItWithYourGame/
 
 # Crashlytics generated file
 crashlytics-build.properties
@@ -104,3 +106,10 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Therapist WebGL dashboard
+/dashboard/node_modules/
+/dashboard/dist/
+/dashboard/.env
+/dashboard/.env.local
+/dashboard/public/rws-cloud-save.json
