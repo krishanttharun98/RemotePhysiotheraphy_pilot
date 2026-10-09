@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Dashboard from './components/Dashboard.jsx'
 import LandingPage from './components/LandingPage.jsx'
 import LoginScreen from './components/LoginScreen.jsx'
-import { ugsSignOut } from './api/ugs.js'
+import { ugsSignInShared, ugsSignOut } from './api/ugs.js'
 
 const THERAPIST_KEY = 'mira_therapist_id'
 
@@ -27,8 +27,13 @@ export default function App() {
   const [view, setView] = useState('home')
   const [therapistId, setTherapistId] = useState(() => readTherapist())
 
-  function login(id) {
+  async function login(id) {
     writeTherapist(id)
+    try {
+      await ugsSignInShared()
+    } catch {
+      // Hosted site can still Import the Unity export file.
+    }
     setTherapistId(id)
   }
 

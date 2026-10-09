@@ -17,11 +17,11 @@ Open http://localhost:5173
 - Therapist ID: `0000`
 - Password: `0000`
 
-If the User ID list is empty, the headset data is still private. On this laptop:
+If the User ID list is empty:
 
-1. Open the Unity project (stay signed in with the account that can see Cloud Save).
-2. **XRHands → Export Cloud Save to Therapist Dashboard**
-3. On the website, click **Reload**.
+1. In Unity: **XRHands → Export Cloud Save to Therapist Dashboard** (writes `dashboard/public/rws-cloud-save.json`).
+2. On the website, click **Import** and choose that file.
+3. Sign in with Therapist ID `0000` / password `0000` if asked.
 
 ## Review
 

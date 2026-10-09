@@ -1,4 +1,4 @@
-import { Lock, Stethoscope } from 'lucide-react'
+import { Loader2, Lock, Stethoscope } from 'lucide-react'
 import { useState } from 'react'
 
 const THERAPIST_ID = '0000'
@@ -8,14 +8,22 @@ export default function LoginScreen({ onLogin, onBack }) {
   const [therapistId, setTherapistId] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
 
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault()
-    if (therapistId.trim() === THERAPIST_ID && password === THERAPIST_PASSWORD) {
-      onLogin(THERAPIST_ID)
+    if (therapistId.trim() !== THERAPIST_ID || password !== THERAPIST_PASSWORD) {
+      setError('Wrong therapist ID or password.')
       return
     }
-    setError('Wrong therapist ID or password.')
+    setBusy(true)
+    setError('')
+    try {
+      await onLogin(THERAPIST_ID)
+    } catch (err) {
+      setError(err.message || 'Sign-in failed.')
+      setBusy(false)
+    }
   }
 
   return (
@@ -62,10 +70,11 @@ export default function LoginScreen({ onLogin, onBack }) {
 
         <button
           type="submit"
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-cyan-500 px-4 py-2.5 font-medium text-slate-950 hover:bg-cyan-400"
+          disabled={busy}
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-cyan-500 px-4 py-2.5 font-medium text-slate-950 hover:bg-cyan-400 disabled:opacity-60"
         >
-          <Lock className="h-4 w-4" />
-          Sign in
+          {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Lock className="h-4 w-4" />}
+          {busy ? 'Signing in…' : 'Sign in'}
         </button>
 
         <p className="mt-5 text-center text-xs text-slate-500">Therapist ID 0000 · password 0000</p>

@@ -6,6 +6,10 @@
 export const UGS_PROJECT_ID = '35a0f424-a2ce-45a4-b2f3-5a9e3b9d734b'
 export const UGS_ENVIRONMENT = 'production'
 
+// Same shared Cloud Save account the headsets use (SharedCloudLogin.cs).
+const SHARED_USERNAME = 'xrhandstherapist'
+const SHARED_PASSWORD = 'XRHands-Pilot0000'
+
 const AUTH_URL = 'https://player-auth.services.api.unity.com/v1/authentication/usernamepassword/sign-in'
 const SAVE_BASE = 'https://cloud-save.services.api.unity.com'
 const STORE_KEY = 'mira_ugs_session'
@@ -41,6 +45,10 @@ export function ugsSession() {
 export function ugsSignOut() {
   current = null
   store(null)
+}
+
+export async function ugsSignInShared() {
+  return ugsSession() || ugsSignIn(SHARED_USERNAME, SHARED_PASSWORD)
 }
 
 export async function ugsSignIn(username, password) {

@@ -1,9 +1,10 @@
-import { LogOut, RefreshCw } from 'lucide-react'
-import { useEffect, useMemo, useState } from 'react'
+import { LogOut, RefreshCw, Upload } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { fetchCloudSessions } from '../api/cloudSave.js'
+import { saveImportedDump } from '../lib/importedDump.js'
 import { PHASE_META, phaseTitle, rsaFromHemisphere } from '../lib/rwsGeometry.js'
 import { ugsSession } from '../api/ugs.js'
-import { directoryFromCloud } from '../lib/sessionAdapter.js'
+import { directoryFromCloud, parseCloudSaveDump } from '../lib/sessionAdapter.js'
 import {
   applyLocalRemovals,
   deletePatientRecord,
@@ -30,6 +31,7 @@ export default function Dashboard({ therapistId, onLogout }) {
   const [pendingDelete, setPendingDelete] = useState(null)
   const [version, setVersion] = useState('game')
   const [compareMode, setCompareMode] = useState(false)
+  const importRef = useRef(null)
 
   const patient = useMemo(
     () => patients.find((p) => p.userId === activeUserId) || null,
@@ -68,6 +70,29 @@ export default function Dashboard({ therapistId, onLogout }) {
     setActiveStorageKey(keepSession ? preferredSessionKey : nextPatient?.sessions[0]?.storageKey || null)
     if (!keepSession) setActiveHistoryIndex(null)
     if (!nextUser) setConsoleView('snapshots')
+  }
+
+  async function importExportFile(file) {
+    if (!file) return
+    setBusy(true)
+    setError('')
+    try {
+      const text = await file.text()
+      const payload = parseCloudSaveDump(text)
+      payload.source = 'import'
+      await saveImportedDump(payload)
+      const { patients: nextPatients } = directoryFromCloud(payload)
+      setCloudMeta({
+        playerId: payload.playerId,
+        source: payload.source,
+        keys: (payload.keys || []).filter((k) => k !== 'rws_session_index'),
+      })
+      applyPatients(nextPatients)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setBusy(false)
+    }
   }
 
   async function loadCloud() {
@@ -190,6 +215,26 @@ export default function Dashboard({ therapistId, onLogout }) {
           <Metric label="Score" value={`${rsa}%`} />
           <Metric label="Saved" value={session?.date || '—'} />
           <Metric label="Therapist" value={therapistId} />
+          <input
+            ref={importRef}
+            type="file"
+            accept="application/json,.json"
+            className="hidden"
+            onChange={(e) => {
+              const file = e.target.files?.[0]
+              e.target.value = ''
+              importExportFile(file)
+            }}
+          />
+          <button
+            type="button"
+            onClick={() => importRef.current?.click()}
+            disabled={busy}
+            className="inline-flex items-center gap-2 rounded-lg border border-slate-700 px-3 py-1.5 text-slate-300 hover:bg-slate-800 disabled:opacity-50"
+          >
+            <Upload className="h-4 w-4" />
+            Import
+          </button>
           <button
             type="button"
             onClick={loadCloud}
@@ -259,13 +304,23 @@ export default function Dashboard({ therapistId, onLogout }) {
                 </div>
               ) : null}
               {!busy && !patients.length ? (
-                <div className="pointer-events-none absolute inset-4 flex items-center justify-center">
+                <div className="absolute inset-4 flex items-center justify-center">
                   <div className="max-w-lg rounded-2xl border border-slate-700 bg-slate-950/90 p-6 text-sm text-slate-200">
                     <p className="font-semibold text-slate-50">No User IDs loaded yet</p>
                     <p className="mt-2 text-slate-400">
-                      Sessions appear here after a patient finishes a session on a headset signed in with the shared
-                      Unity account. Sign in with that same account, then click Reload.
+                      Unity export writes a local file this website cannot see by itself. Click Import and choose
+                      <span className="text-slate-200"> rws-cloud-save.json </span>
+                      from the project folder
+                      <span className="text-slate-200"> dashboard/public</span>.
                     </p>
+                    <button
+                      type="button"
+                      onClick={() => importRef.current?.click()}
+                      className="mt-4 inline-flex items-center gap-2 rounded-lg bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-400"
+                    >
+                      <Upload className="h-4 w-4" />
+                      Import rws-cloud-save.json
+                    </button>
                   </div>
                 </div>
               ) : null}

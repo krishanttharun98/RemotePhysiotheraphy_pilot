@@ -1,4 +1,5 @@
 import { parseCloudSaveDump } from '../lib/sessionAdapter.js'
+import { loadImportedDump } from '../lib/importedDump.js'
 import { fetchUgsSessions, ugsSession } from './ugs.js'
 
 export const DEFAULT_PLAYER_ID = '7EOyuU9AXzVZDR3vtQcDANgahjFD'
@@ -23,22 +24,26 @@ function parseJsonSafe(text) {
 }
 
 export async function fetchCloudSessions() {
-  if (ugsSession()) {
-    const raw = await fetchUgsSessions()
-    const cloud = raw?.results?.length ? parseCloudSaveDump(raw, raw.playerId) : null
-    if (cloud) {
-      cloud.source = 'unity-cloud'
-      const dump = import.meta.env.DEV ? await fetchEditorDump() : null
-      return dump ? mergeSessionPayloads(dump, cloud) : cloud
-    }
-    throw new Error('Signed in to Unity, but this account has no saved sessions yet. Play a session on the headset, then Reload.')
-  }
+  const imported = await loadImportedDump()
   const dump = await fetchEditorDump()
-  const live = await fetchLiveSessions()
-  if (dump && live) return mergeSessionPayloads(live, dump)
-  if (dump) return dump
-  if (live) return live
-  throw new Error('No sessions loaded. Export Cloud Save from Unity (XRHands menu), then Reload.')
+  let cloud = null
+  if (ugsSession()) {
+    try {
+      const raw = await fetchUgsSessions()
+      cloud = raw?.results?.length ? parseCloudSaveDump(raw, raw.playerId) : null
+      if (cloud) cloud.source = 'unity-cloud'
+    } catch {
+      cloud = null
+    }
+  }
+  const live = cloud ? null : await fetchLiveSessions()
+  const parts = [cloud, live, dump, imported].filter(Boolean)
+  if (!parts.length) {
+    throw new Error(
+      'No sessions loaded. On the website click Import and choose the exported rws-cloud-save.json (XRHands → Export Cloud Save to Therapist Dashboard writes it to dashboard/public).',
+    )
+  }
+  return parts.reduce((acc, next) => mergeSessionPayloads(acc, next))
 }
 
 async function fetchLiveSessions() {
