@@ -21,7 +21,9 @@ function hasPhaseBody(phase) {
   return Boolean(
     phase.grid ||
       phase.hemisphere ||
+      phase.metrics ||
       (Array.isArray(phase.markers) && phase.markers.length) ||
+      (Array.isArray(phase.traces) && phase.traces.length) ||
       (Array.isArray(phase.shells) && phase.shells.length),
   )
 }
@@ -39,7 +41,7 @@ function markersFromGrid(phaseSnap) {
         const radius = grid.radii[ring] || 0.3
         const pos = mapBubbleGridToLocal(grid.phase, grid.isRear, lon, 0, radius, ring)
         const quadrant = getStandardQuadrantIndex(lon / grid.lonCount, 0.5)
-        markers.push({ px: pos[0], py: pos[1], pz: pos[2], quadrant, scale: 0.045 })
+        markers.push({ px: pos[0], py: pos[1], pz: pos[2], quadrant, scale: 0.045, lon, lat: 0 })
       }
     }
   } else {
@@ -49,31 +51,42 @@ function markersFromGrid(phaseSnap) {
         const radius = grid.radii[0] || 0.5
         const pos = mapBubbleGridToLocal(grid.phase, grid.isRear, lon, lat, radius)
         const quadrant = getStandardQuadrantIndex(lon / (grid.lonSegments || 24), lat / 12)
-        markers.push({ px: pos[0], py: pos[1], pz: pos[2], quadrant, scale: 0.045 })
+        markers.push({ px: pos[0], py: pos[1], pz: pos[2], quadrant, scale: 0.045, lon, lat })
       }
     }
   }
   return markers
 }
 
+function adaptPhases(list) {
+  const out = [null, null, null, null, null]
+  if (!Array.isArray(list)) return out
+  list.forEach((phase, i) => {
+    if (!hasPhaseBody(phase)) return
+    const slot = phase.historyIndex >= 1 && phase.historyIndex <= 5 ? phase.historyIndex - 1 : i
+    if (slot < 0 || slot > 4) return
+    const other = phase.otherArm && phase.otherArm.grid ? phase.otherArm : null
+    out[slot] = {
+      ...phase,
+      historyIndex: slot + 1,
+      markers: markersFromGrid(phase),
+      otherArm: other,
+    }
+  })
+  return out
+}
+
 export function adaptSnapshot(raw, storageKey = '') {
   const snap = unwrapJson(raw) || raw
   if (!snap || typeof snap !== 'object') return null
 
-  const phasesIn = Array.isArray(snap.phases) ? snap.phases : []
-  const phases = [null, null, null, null, null]
-  phasesIn.forEach((phase, i) => {
-    if (!hasPhaseBody(phase)) return
-    const slot = phase.historyIndex >= 1 && phase.historyIndex <= 5 ? phase.historyIndex - 1 : i
-    if (slot < 0 || slot > 4) return
-    phases[slot] = {
-      ...phase,
-      historyIndex: slot + 1,
-      markers: markersFromGrid(phase),
-    }
-  })
+  const phases = adaptPhases(snap.phases)
+  const plainPhases = adaptPhases(snap.plainPhases)
+  const hasGame = phases.some(Boolean)
+  const hasPlain = plainPhases.some(Boolean)
 
-  const scorePhase = phases.find((p) => p?.hemisphere) || phases[1] || phases[0]
+  const scoreList = hasGame ? phases : plainPhases
+  const scorePhase = scoreList.find((p) => p?.hemisphere) || scoreList[1] || scoreList[0]
   const saved = snap.savedAtUtc || ''
   return {
     userId: snap.userId || '',
@@ -83,6 +96,15 @@ export function adaptSnapshot(raw, storageKey = '') {
     elapsedTimeSeconds: snap.elapsedTimeSeconds || 0,
     storageKey,
     phases,
+    plainPhases,
+    hasGame,
+    hasPlain,
+    playMode: snap.playMode || '',
+    guest: Boolean(snap.guest),
+    nonGamified: Boolean(snap.nonGamified),
+    patientAge: snap.patientAge || '',
+    patientGender: snap.patientGender || '',
+    patientCondition: snap.patientCondition || '',
     score: Math.round(rsaFromHemisphere(scorePhase?.hemisphere) * 100),
   }
 }
@@ -131,6 +153,12 @@ export function directoryFromCloud(payload) {
         date: (entry.savedAtUtc || '').slice(0, 10),
         elapsedTimeSeconds: 0,
         phases: [null, null, null, null, null],
+        plainPhases: [null, null, null, null, null],
+        playMode: entry.playMode || '',
+        guest: Boolean(entry.guest),
+        nonGamified: Boolean(entry.nonGamified),
+        hasGame: Boolean(entry.hasGame),
+        hasPlain: Boolean(entry.hasPlain),
         score: 0,
         missingBody: true,
       })
@@ -153,8 +181,19 @@ export function directoryFromCloud(payload) {
   return { patients, sessionsByKey }
 }
 
+function stripBom(text) {
+  return String(text || '').replace(/^\uFEFF/, '')
+}
+
 export function parseCloudSaveDump(input, playerId = '') {
-  const parsed = typeof input === 'string' ? JSON.parse(input) : input
+  let parsed = input
+  if (typeof input === 'string') {
+    const text = stripBom(input).trim()
+    if (!text.startsWith('{') && !text.startsWith('[')) {
+      throw new Error('Cloud Save file was not JSON.')
+    }
+    parsed = JSON.parse(text)
+  }
   if (!parsed || typeof parsed !== 'object') throw new Error('Cloud Save dump was empty.')
 
   const sessions = {}

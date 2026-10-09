@@ -12,12 +12,26 @@ export const HEATMAP_SIDE_OFFSET = [1.2, 0, 0.15]
 export const AVATAR_HEAD = [0, 1.58, 0]
 
 export const PHASE_META = [
-  { historyIndex: 1, phase: 1, isRear: false, label: 'Phase 1', short: 'P1' },
-  { historyIndex: 2, phase: 2, isRear: false, label: 'Phase 2', short: 'P2' },
-  { historyIndex: 3, phase: 3, isRear: false, label: 'Phase 3 Front', short: 'P3F' },
-  { historyIndex: 4, phase: 3, isRear: true, label: 'Phase 3 Rear', short: 'P3R' },
-  { historyIndex: 5, phase: 4, isRear: false, label: 'Phase 4', short: 'P4' },
+  { historyIndex: 1, phase: 1, isRear: false, label: 'Phase 1', short: 'P1', game: 'Market', plain: 'Near reach' },
+  { historyIndex: 2, phase: 2, isRear: false, label: 'Phase 2', short: 'P2', game: 'Glow Tree', plain: 'Full reach' },
+  { historyIndex: 3, phase: 3, isRear: false, label: 'Phase 3 Front', short: 'P3F', game: 'Butterflies', plain: 'Around the face' },
+  { historyIndex: 4, phase: 3, isRear: true, label: 'Phase 3 Rear', short: 'P3R', game: 'Light the Christmas Tree', plain: 'Behind the head' },
+  { historyIndex: 5, phase: 4, isRear: false, label: 'Phase 4', short: 'P4', game: 'Koi Pond', plain: 'Around the trunk' },
 ]
+
+export function phaseTitle(meta, version = 'game') {
+  if (!meta) return ''
+  return `${meta.label} · ${version === 'plain' ? meta.plain : meta.game}`
+}
+
+/** Share of grid points reached (0–1) from a grid snapshot's quadrant counts. */
+export function gridReach(grid) {
+  const popped = (grid?.quadrantPopped || []).reduce((a, b) => a + b, 0)
+  const total = (grid?.quadrantTotal || []).reduce((a, b) => a + b, 0)
+  return total ? popped / total : 0
+}
+
+export const SIDE_NAMES = ['', 'Left', 'Right']
 
 export const QUADRANT_LABELS = ['Top-Left', 'Bottom-Left', 'Top-Right', 'Bottom-Right']
 

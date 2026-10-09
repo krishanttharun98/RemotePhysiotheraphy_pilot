@@ -1,18 +1,29 @@
-import { Lock, Stethoscope } from 'lucide-react'
+import { Loader2, Lock, Stethoscope } from 'lucide-react'
+import { ugsSignIn } from '../api/ugs.js'
 import { useState } from 'react'
 
 export default function LoginScreen({ onLogin, onBack }) {
   const [therapistId, setTherapistId] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
 
-  function submit(event) {
+  async function submit(event) {
     event.preventDefault()
-    if (therapistId === '0000' && password === '0000') {
-      onLogin(therapistId)
+    if (!therapistId.trim() || !password) {
+      setError('Enter the shared Unity username and password.')
       return
     }
-    setError('Invalid therapist ID or password.')
+    setBusy(true)
+    setError('')
+    try {
+      const s = await ugsSignIn(therapistId, password)
+      onLogin(s.username)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setBusy(false)
+    }
   }
 
   return (
@@ -32,13 +43,13 @@ export default function LoginScreen({ onLogin, onBack }) {
         </div>
 
         <label className="mb-4 block">
-          <span className="mb-1.5 block text-sm text-slate-400">Therapist login ID</span>
+          <span className="mb-1.5 block text-sm text-slate-400">Unity username</span>
           <input
             value={therapistId}
             onChange={(e) => setTherapistId(e.target.value)}
-            inputMode="numeric"
-            maxLength={4}
-            placeholder="0000"
+            autoComplete="username"
+            autoCapitalize="none"
+            placeholder="Shared headset account"
             className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-slate-100 outline-none ring-cyan-400/40 focus:ring-2"
           />
         </label>
@@ -49,8 +60,7 @@ export default function LoginScreen({ onLogin, onBack }) {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            maxLength={4}
-            placeholder="0000"
+            autoComplete="current-password"
             className="w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-slate-100 outline-none ring-cyan-400/40 focus:ring-2"
           />
         </label>
@@ -59,13 +69,14 @@ export default function LoginScreen({ onLogin, onBack }) {
 
         <button
           type="submit"
-          className="flex w-full items-center justify-center gap-2 rounded-lg bg-cyan-500 px-4 py-2.5 font-medium text-slate-950 hover:bg-cyan-400"
+          disabled={busy}
+          className="flex w-full items-center justify-center gap-2 rounded-lg bg-cyan-500 px-4 py-2.5 font-medium text-slate-950 hover:bg-cyan-400 disabled:opacity-60"
         >
-          <Lock className="h-4 w-4" />
-          Sign in
+          {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Lock className="h-4 w-4" />}
+          {busy ? 'Signing in…' : 'Sign in'}
         </button>
 
-        <p className="mt-5 text-center text-xs text-slate-500">Pilot credentials: ID 0000 / password 0000</p>
+        <p className="mt-5 text-center text-xs text-slate-500">Use the same Unity account the headsets sign in with. Session data loads live from Unity Cloud Save.</p>
         {onBack ? (
           <button
             type="button"

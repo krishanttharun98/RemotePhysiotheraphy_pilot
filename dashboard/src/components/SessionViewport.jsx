@@ -64,6 +64,21 @@ export default function SessionViewport({ phaseSnap }) {
               </span>
             ))}
           </div>
+          <div className="mt-2 border-t border-slate-800 pt-2 text-[10px] text-slate-400">
+            <p className="mb-1 text-slate-300">Reach path (click a marker) — blue out, orange back, red wobble slash</p>
+            <div className="flex flex-wrap gap-x-3 gap-y-1">
+              {[
+                ['#1e88f5', 'Basket \u2192 target'],
+                ['#fa850d', 'Target \u2192 basket'],
+                ['#f22633', 'Wobble slash'],
+              ].map(([color, label]) => (
+                <span key={label} className="inline-flex items-center gap-1">
+                  <span className="inline-block h-1 w-4 rounded-full" style={{ background: color }} />
+                  {label}
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       )}
     </div>

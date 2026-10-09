@@ -1,7 +1,8 @@
 import { Search, UserRound } from 'lucide-react'
 import { useMemo, useState } from 'react'
+import OverflowMenu from './OverflowMenu.jsx'
 
-export default function PatientDirectory({ patients, activeUserId, onSelect }) {
+export default function PatientDirectory({ patients, activeUserId, onSelect, onViewProfile, onDelete }) {
   const [query, setQuery] = useState('')
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -36,26 +37,36 @@ export default function PatientDirectory({ patients, activeUserId, onSelect }) {
         {filtered.map((patient) => {
           const active = patient.userId === activeUserId
           return (
-            <button
+            <div
               key={patient.userId}
-              type="button"
-              onClick={() => onSelect(patient.userId)}
-              className={`mb-1 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left ${
+              className={`mb-1 flex w-full items-center gap-2 rounded-lg px-2 py-1.5 ${
                 active
                   ? 'bg-cyan-500/15 text-cyan-200 ring-1 ring-cyan-400/40'
                   : 'text-slate-300 hover:bg-slate-900'
               }`}
             >
-              <span className={`flex h-8 w-8 items-center justify-center rounded-full ${active ? 'bg-cyan-500/20' : 'bg-slate-800'}`}>
-                <UserRound className="h-4 w-4" />
-              </span>
-              <span className="min-w-0">
-                <span className="block truncate font-medium">{patient.userId}</span>
-        <span className="block truncate text-xs text-slate-500">
-                  {patient.sessionCount} {patient.sessionCount === 1 ? 'session' : 'sessions'}
+              <button
+                type="button"
+                onClick={() => onSelect(patient.userId)}
+                className="flex min-w-0 flex-1 items-center gap-3 px-1 py-1 text-left"
+              >
+                <span className={`flex h-8 w-8 items-center justify-center rounded-full ${active ? 'bg-cyan-500/20' : 'bg-slate-800'}`}>
+                  <UserRound className="h-4 w-4" />
                 </span>
-              </span>
-            </button>
+                <span className="min-w-0">
+                  <span className="block truncate font-medium">{patient.userId}</span>
+                  <span className="block truncate text-xs text-slate-500">
+                    {patient.sessionCount} {patient.sessionCount === 1 ? 'session' : 'sessions'}
+                  </span>
+                </span>
+              </button>
+              <OverflowMenu
+                items={[
+                  { label: 'View profile', onClick: () => onViewProfile(patient.userId) },
+                  { label: 'Delete patient data', danger: true, onClick: () => onDelete(patient) },
+                ]}
+              />
+            </div>
           )
         })}
       </div>

@@ -1,4 +1,5 @@
 import { parseCloudSaveDump } from '../lib/sessionAdapter.js'
+import { fetchUgsSessions, ugsSession } from './ugs.js'
 
 export const DEFAULT_PLAYER_ID = '7EOyuU9AXzVZDR3vtQcDANgahjFD'
 
@@ -7,26 +8,83 @@ const assetUrl = (path) => {
   return `${base}${path.replace(/^\//, '')}`
 }
 
+function looksLikeJson(text) {
+  const trimmed = String(text || '').replace(/^\uFEFF/, '').trim()
+  return trimmed.startsWith('{') || trimmed.startsWith('[')
+}
+
+function parseJsonSafe(text) {
+  if (!looksLikeJson(text)) return null
+  try {
+    return JSON.parse(String(text).replace(/^\uFEFF/, ''))
+  } catch {
+    return null
+  }
+}
+
 export async function fetchCloudSessions() {
-  let live = null
+  if (ugsSession()) {
+    const raw = await fetchUgsSessions()
+    const cloud = raw?.results?.length ? parseCloudSaveDump(raw, raw.playerId) : null
+    if (cloud) {
+      cloud.source = 'unity-cloud'
+      const dump = import.meta.env.DEV ? await fetchEditorDump() : null
+      return dump ? mergeSessionPayloads(dump, cloud) : cloud
+    }
+    throw new Error('Signed in to Unity, but this account has no saved sessions yet. Play a session on the headset, then Reload.')
+  }
+  const dump = await fetchEditorDump()
+  const live = await fetchLiveSessions()
+  if (dump && live) return mergeSessionPayloads(live, dump)
+  if (dump) return dump
+  if (live) return live
+  throw new Error('No sessions loaded. Sign out and sign in with the shared Unity account to read Cloud Save.')
+}
+
+async function fetchLiveSessions() {
   try {
     const res = await fetch(assetUrl('api/cloud-save/sessions'))
-    live = await res.json()
-    if (res.ok && live.keys?.length) return live
-    if (!res.ok) throw new Error(live.error || 'Cloud Save request failed')
-  } catch (err) {
-    const dump = await fetchEditorDump()
-    if (dump) return dump
-    throw err
+    const text = await res.text()
+    const live = parseJsonSafe(text)
+    if (!res.ok || !live) return null
+    if (!live.keys?.length && !live.sessions) return null
+    return live
+  } catch {
+    return null
   }
-
-  const dump = await fetchEditorDump()
-  return dump || live
 }
 
 async function fetchEditorDump() {
-  const res = await fetch(assetUrl('rws-cloud-save.json'), { cache: 'no-store' })
-  if (!res.ok) return null
-  const data = await res.json()
-  return parseCloudSaveDump(data, DEFAULT_PLAYER_ID)
+  const urls = [assetUrl('rws-cloud-save.json'), '/rws-cloud-save.json']
+  for (const url of urls) {
+    try {
+      const res = await fetch(url, { cache: 'no-store' })
+      if (!res.ok) continue
+      const text = await res.text()
+      if (!looksLikeJson(text)) continue
+      return parseCloudSaveDump(text, DEFAULT_PLAYER_ID)
+    } catch {
+      // Try the next URL.
+    }
+  }
+  return null
+}
+
+function mergeSessionPayloads(live, dump) {
+  const sessions = { ...(live.sessions || {}), ...(dump.sessions || {}) }
+  const liveIndex = live.index?.entries || []
+  const dumpIndex = dump.index?.entries || []
+  const byKey = new Map()
+  ;[...liveIndex, ...dumpIndex].forEach((entry) => {
+    if (entry?.storageKey) byKey.set(entry.storageKey, entry)
+  })
+  return {
+    playerId: dump.playerId || live.playerId || DEFAULT_PLAYER_ID,
+    projectId: dump.projectId || live.projectId || '',
+    environmentId: dump.environmentId || live.environmentId || '',
+    source: dump.source || live.source || 'merge',
+    keys: Object.keys(sessions),
+    index: { entries: [...byKey.values()] },
+    sessions,
+  }
 }
