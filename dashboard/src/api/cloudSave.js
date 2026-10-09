@@ -38,7 +38,7 @@ export async function fetchCloudSessions() {
   if (dump && live) return mergeSessionPayloads(live, dump)
   if (dump) return dump
   if (live) return live
-  throw new Error('No sessions loaded. Sign out and sign in with the shared Unity account to read Cloud Save.')
+  throw new Error('No sessions loaded. Export Cloud Save from Unity (XRHands menu), then Reload.')
 }
 
 async function fetchLiveSessions() {

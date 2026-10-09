@@ -14,7 +14,8 @@ Open http://localhost:5173
 
 ## Sign in
 
-Use the same Unity username and password the headsets sign in with. After sign-in the console loads Cloud Save for that player.
+- Therapist ID: `0000`
+- Password: `0000`
 
 If the User ID list is empty, the headset data is still private. On this laptop:
 
